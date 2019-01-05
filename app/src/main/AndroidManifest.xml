@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="bd.univdhaka.cse2216.learnyorself">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:description="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Learn Yourself"
+        android:logo="@mipmap/ic_launcher">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity5" />
+        <activity android:name=".SplashScreen0">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Vedio_Play" />
+        <activity android:name=".SignUpActivity3" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".Others_Profile" />
+        <activity android:name=".UploadVideo10" />
+        <activity
+            android:name=".CreatePost12"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".LoginActivity4" />
+        <activity android:name=".SearchActivity"></activity>
+    </application>
+
+</manifest>

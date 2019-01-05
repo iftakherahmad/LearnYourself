@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lime"
+    tools:context=".P_A_AboutFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <ImageView
+               android:layout_width="wrap_content"
+               android:src="@drawable/ic_stars_black_24dp"
+               android:contentDescription="ProfilePic"
+               android:layout_marginTop="12dp"
+               android:layout_marginLeft="10dp"
+               android:layout_height="wrap_content" />
+           <TextView
+
+               android:layout_width="200dp"
+               android:layout_marginTop="10dp"
+               android:layout_height="wrap_content"
+               android:id="@+id/username"
+               android:textSize="14sp"
+               android:textColor="@color/colorAccent"
+               android:text="@string/username"
+               android:layout_marginLeft="10dp"
+               />
+           <RelativeLayout
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content">
+               <ImageView
+                   android:id="@+id/profilepic"
+                   android:layout_width="120dp"
+                   android:src="@drawable/unknownperson"
+                   android:scaleType="fitXY"
+                   android:paddingRight="5dp"
+                   android:paddingTop="2dp"
+                   android:layout_alignParentEnd="true"
+                   android:contentDescription="ProfilePic"
+                   android:layout_height="100dp"
+                   />
+           </RelativeLayout>
+
+
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:layout_marginTop="2dp"
+               android:textColor="@color/black"
+               android:text="Name:"
+               android:layout_marginStart="20dp"
+
+               />
+           <EditText
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/name"
+               android:textSize="14sp"
+               android:text="name"
+               android:layout_marginTop="2dp"
+               android:textColor="@color/black"
+               android:layout_marginLeft="10dp"
+               />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:text="Email:"
+               android:layout_marginStart="20dp"
+               android:layout_marginTop="2dp"
+
+               />
+           <TextView
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/email"
+               android:textSize="14sp"
+               android:text="email"
+               android:layout_marginTop="2dp"
+               android:textColor="@color/black"
+               android:layout_marginStart="10dp"
+               />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:text="Institution:"
+               android:layout_marginStart="20dp"
+               android:layout_marginTop="2dp"
+               />
+           <EditText
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/institution"
+               android:textSize="14sp"
+               android:text="institution"
+               android:layout_marginTop="2dp"
+               android:textColor="@color/black"
+               android:layout_marginStart="10dp"
+               />
+
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:text="Profession:"
+               android:layout_marginStart="20dp"
+               android:layout_marginTop="2dp"
+
+               />
+           <Spinner
+               android:layout_width="match_parent"
+               android:id="@+id/profession"
+               android:layout_marginTop="2dp"
+               android:textSize="14sp"
+               android:layout_marginStart="10dp"
+               android:entries="@array/userprofessions"
+               android:layout_height="wrap_content">
+           </Spinner>
+
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:text="Old Password:"
+               android:layout_marginLeft="20dp"
+               android:layout_marginTop="2dp"
+
+               />
+           <EditText
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/oldpassword"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:layout_marginLeft="10dp"
+               android:hint="Enter old password"
+               android:layout_marginTop="2dp"
+               android:inputType="textPassword"
+               />
+
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:layout_marginTop="2dp"
+               android:text="New Password:"
+               android:layout_marginLeft="20dp"
+
+               />
+
+           <EditText
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/newpassword"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:layout_marginTop="2dp"
+               android:layout_marginLeft="10dp"
+
+               android:hint= "Enter new password"
+               android:inputType="textPassword"
+               />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="horizontal"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:layout_marginTop="2dp"
+               android:text="Confirm Password:"
+               android:layout_marginLeft="20dp"
+
+               />
+           <EditText
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="2dp"
+               android:id="@+id/confirmpassword"
+               android:textSize="14sp"
+               android:textColor="@color/black"
+               android:layout_marginLeft="10dp"
+               android:hint="Confirm password"
+               android:inputType="textPassword"
+               />
+
+       </LinearLayout>
+
+       <Button
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/update"
+           android:layout_marginTop="5dp"
+           android:background="@color/back"
+           android:textSize="14sp"
+           android:textColor="@color/black"
+           android:text="UPDATE INFO"/>
+
+
+
+
+
+</LinearLayout>

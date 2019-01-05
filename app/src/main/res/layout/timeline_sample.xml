@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/parentlayout"
+    android:background="@color/back"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@color/aqua"
+            android:id="@+id/profilepic"
+            />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/postowner"
+                android:text="owner"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Posting time and date"
+                android:id="@+id/postingdate"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentimage"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/details"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:text="Sample content\n kut kut kheloladnfv jfbivifsfsufu\nvkgjfgjiofgiugfgifig"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="30dp"
+        android:background="@color/aqua"
+        android:layout_height="30dp">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:id="@+id/like"
+            android:background="@color/fuch"
+            android:padding="12dp"
+            android:src="@drawable/ic_thumb_up_black_24dp"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:paddingRight="20dp"
+            android:background="@color/fuch"
+            android:paddingLeft="20dp"
+            android:id="@+id/dislike"
+            android:padding="12dp"
+            android:layout_toRightOf="@id/like"
+            android:layout_marginLeft="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_thumb_down_black_24dp"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content">
+            <Button
+
+                android:layout_width="wrap_content"
+                android:background="@color/fuch"
+                android:layout_marginLeft="70dp"
+                android:text="Ansers"
+                android:id="@+id/ansers"
+                android:layout_toLeftOf="@id/addanser"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:background="@color/fuch"
+                android:id="@+id/addanser"
+
+                android:padding="12dp"
+                android:tooltipText="Add anser"
+                android:src="@drawable/ic_playlist_add_black_24dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>

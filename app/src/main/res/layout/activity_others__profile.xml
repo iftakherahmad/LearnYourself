@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Others_Profile">
+    <co.ceryle.radiorealbutton.RadioRealButtonGroup
+        android:layout_width="match_parent"
+        android:id="@+id/buttongroup"
+        android:layout_height="wrap_content">
+        <co.ceryle.radiorealbutton.RadioRealButton
+            android:layout_width="wrap_content"
+            app:rrb_text="About"
+            app:rrb_textColor="@color/black"
+            android:layout_height="match_parent"/>
+        <co.ceryle.radiorealbutton.RadioRealButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:rrb_drawable="@drawable/ic_videocam_black_24dp"
+            />
+        <co.ceryle.radiorealbutton.RadioRealButton
+            android:layout_width="wrap_content"
+            app:rrb_drawable="@drawable/ic_question_answer_black_24dp"
+            android:layout_height="match_parent"/>
+    </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_frame_layout_id"
+        android:layout_height="fill_parent">
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </fragment>
+
+    </FrameLayout>
+
+</LinearLayout>

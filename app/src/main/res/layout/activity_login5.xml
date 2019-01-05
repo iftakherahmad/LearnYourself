@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+
+    tools:context=".LoginActivity5">
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content">
+
+
+        <co.ceryle.radiorealbutton.RadioRealButtonGroup
+            android:layout_width="match_parent"
+            android:layout_margin="0dp"
+            android:id="@+id/buttongroup"
+            app:rrbg_animate="true"
+            app:rrbg_animateTexts_enter="bounce"
+            app:rrbg_animateSelector_duration="500"
+            app:rrbg_animateSelector="2"
+            app:rrbg_dividerColor="@color/gray"
+            app:rrbg_dividerSize="1dp"
+            app:rrbg_radius="3dp"
+            app:rrbg_selectorColor="#bababa"
+            app:rrbg_selectorSize="4dp"
+            android:layout_height="wrap_content">
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:showDividers="end"
+                android:id="@+id/home"
+                app:rrb_textSize="10sp"
+                app:rrb_drawable="@drawable/ic_home_black_24dp"
+                app:rrb_ripple="true"
+                app:rrb_textColor="@color/blue"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+
+                app:rrb_rippleColor="@color/fuchsia"
+                />
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rrb_drawable="@drawable/ic_timeline_black_24dp"
+                app:rrb_ripple="true"
+                android:paddingBottom="10dp"
+                android:id="@+id/timeline"
+                android:paddingTop="10dp"
+                app:rrb_textSize="18sp"
+                app:rrb_textColor="#4a4a4a"
+                app:rrb_rippleColor="@color/fuchsia"
+
+                />
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rrb_drawable="@drawable/ic_notifications_none_black_24dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                app:rrb_textSize="18sp"
+                android:id="@+id/notification"
+                app:rrb_ripple="true"
+                app:rrb_textColor="#4a4a4a"
+                app:rrb_rippleColor="@color/fuchsia"
+                />
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rrb_drawable="@drawable/ic_person_add_black_24dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:id="@+id/request"
+                app:rrb_ripple="true"
+                app:rrb_textColor="#4a4a4a"
+                app:rrb_textSize="18sp"
+                app:rrb_rippleColor="@color/fuchsia"
+                />
+
+        </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+    </LinearLayout>
+    <FrameLayout
+        android:background="@color/blue"
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_frame_layout_id"
+        android:layout_height="fill_parent">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:id="@+id/fragmentid"
+            android:layout_height="match_parent"
+            android:name="bd.univdhaka.cse2216.learnyorself.TimeLine"
+            >
+
+        </fragment>
+    </FrameLayout>
+
+
+
+    </LinearLayout>
+
+

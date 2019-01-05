@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "258457098847",
+    "firebase_url": "https://learnyorself-ee6ad.firebaseio.com",
+    "project_id": "learnyorself-ee6ad",
+    "storage_bucket": "learnyorself-ee6ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258457098847:android:71ac897be78dcce1",
+        "android_client_info": {
+          "package_name": "bd.univdhaka.cse2216.learnyorself"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258457098847-7q48mhsj4d0ub9aer541dj1v09fsiirf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bd.univdhaka.cse2216.learnyorself",
+            "certificate_hash": "12dfe5d857df471c16642005ed08f0d6696d0e2a"
+          }
+        },
+        {
+          "client_id": "258457098847-tnnnbv484im6vmi3j0h41ptscpki3t55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZMwvkDUPE59Wt6Lnr-R1CadRzis68Dak"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258457098847-tnnnbv484im6vmi3j0h41ptscpki3t55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
