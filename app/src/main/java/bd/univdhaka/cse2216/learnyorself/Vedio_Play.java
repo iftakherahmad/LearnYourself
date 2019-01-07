@@ -3,15 +3,24 @@ package bd.univdhaka.cse2216.learnyorself;
 import android.app.Activity;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.VideoView;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
+//...............................................................................\\\\......////
 
 public class Vedio_Play extends Activity {
     private VideoView videoView;
     private ProgressBar progressBar;
+    private Scanner scanner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,4 +67,5 @@ public class Vedio_Play extends Activity {
             }
         });
     }
+
 }

@@ -29,7 +29,8 @@
             android:name=".CreatePost12"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".LoginActivity4" />
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".ViewPost"></activity>
     </application>
 
 </manifest>

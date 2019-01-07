@@ -85,6 +85,15 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
             System.out.println("tut tut1");
             viewHolder.postingDate.setText(postingDates.get(i));
             System.out.println("tut tut2");
+            viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context,ViewPost.class);
+                    intent.putExtra("type","questions");
+                    intent.putExtra("postId",postIds.get(i));
+                    context.startActivity(intent);
+                }
+            });
             System.out.println("tut tut5");
             if(!contentImages.get(i).equals("no image"))Glide.with(context).asBitmap().load(contentImages.get(i)).into(viewHolder.contentImage);
             System.out.println("tut tut6");

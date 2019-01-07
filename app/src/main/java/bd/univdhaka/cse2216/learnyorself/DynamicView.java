@@ -36,13 +36,13 @@ public class DynamicView {
         editText.setText(" ");
         return editText;
     }
-    public ImageView createImageView(Uri uri){
+    public ImageView createImageView(String url){
         ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView imageView=new ImageView(context);
         imageView.setLayoutParams(layoutParams);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        if(uri!=null)
-        Glide.with(context).asBitmap().load(uri).into(imageView);
+        if(url!=null)
+        Glide.with(context).asBitmap().load(url).into(imageView);
         return imageView;
     }
 }

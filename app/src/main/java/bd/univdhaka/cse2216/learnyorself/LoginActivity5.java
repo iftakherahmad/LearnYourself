@@ -150,7 +150,11 @@ public class LoginActivity5 extends Activity {
 
         }
         if(item.getItemId()==R.id.writearticle){
-            Intent intent=new Intent(this,Vedio_Play.class);
+            Intent intent=new Intent(this,ViewPost.class);
+            System.out.println("....9999999");
+            intent.putExtra("type","questions");
+            intent.putExtra("postId","-LVdNpivCEShjRX8gSFc");
+            System.out.println(".....4");
             startActivity(intent);
         }
         if(item.getItemId()==R.id.finduser)

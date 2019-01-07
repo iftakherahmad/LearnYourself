@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,7 +93,7 @@ public class P_A_AboutFragment extends Fragment {
         emailView.setText(email);
         institutionView.setText(institution);
         professionView.setSelection(((ArrayAdapter)professionView.getAdapter()).getPosition(profession));
-        GlideApp.with(context).asBitmap().load(profilePicUrl).into(profilePicView);
+        Glide.with(context).asBitmap().load(profilePicUrl).into(profilePicView);
     }
 
 }

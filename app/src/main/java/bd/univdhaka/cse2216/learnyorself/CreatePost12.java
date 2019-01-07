@@ -217,7 +217,7 @@ public class CreatePost12 extends Activity {
     }
 
     private void displaySelectedImage(Uri uri) {
-        ImageView imageView=dynamicView.createImageView(uri);
+        ImageView imageView=dynamicView.createImageView(uri.toString());
         container.addView(imageView);
         postContentSequence+="/image/txt";
         uris.add(uri);
@@ -233,3 +233,4 @@ public class CreatePost12 extends Activity {
         startActivityForResult(intent,79);
     }
 }
+
