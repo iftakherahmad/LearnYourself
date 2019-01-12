@@ -28,14 +28,15 @@ import java.util.Scanner;
 
 public class SearchActivity extends Activity {
     private RecyclerView recyclerView;
-    private ArrayList<String> profilePics=new ArrayList<>();
-    private ArrayList<String> owners=new ArrayList<>();
-    private ArrayList<String> uploadDates=new ArrayList<>();
-    private ArrayList<String> descriptions=new ArrayList<>();
-    private ArrayList<String> contentImages=new ArrayList<>();
-    private ArrayList<String> postTypes=new ArrayList<>();
-    private ArrayList<String> titleTags=new ArrayList<>();
-    private ArrayList<String> postIds=new ArrayList<>();
+//    private ArrayList<String> profilePics=new ArrayList<>();
+//    private ArrayList<String> owners=new ArrayList<>();
+//    private ArrayList<String> uploadDates=new ArrayList<>();
+//    private ArrayList<String> descriptions=new ArrayList<>();
+//    private ArrayList<String> contentImages=new ArrayList<>();
+//    private ArrayList<String> postTypes=new ArrayList<>();
+//    private ArrayList<String> titleTags=new ArrayList<>();
+//    private ArrayList<String> postIds=new ArrayList<>();
+    private ArrayList<timeline_object> posts=new ArrayList<>();
     private TimelineViewAdapter adapter;
     private Spinner spinner;
     private ProgressBar progressBar;
@@ -48,7 +49,7 @@ public class SearchActivity extends Activity {
         setTitle("Search");
         recyclerView=findViewById(R.id.recyclerView);
         progressBar =findViewById(R.id.progressbar);
-        adapter=new TimelineViewAdapter(postIds,postTypes,context,profilePics,owners,uploadDates,contentImages,descriptions);
+        adapter=new TimelineViewAdapter(posts,context);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
@@ -88,15 +89,7 @@ public class SearchActivity extends Activity {
     }
 
     private void updateRecyclerView(String query) {
-        profilePics.clear();
-        owners.clear();
-        descriptions.clear();
-        uploadDates.clear();
-        contentImages.clear();
-        postTypes.clear();
-        titleTags.clear();
-        postIds.clear();
-
+     posts.clear();
         String type=spinner.getSelectedItem().toString();
 //        Log.d("print in logcat","second");
 //        System.out.println("here2");
@@ -116,10 +109,13 @@ public class SearchActivity extends Activity {
 //                            Log.d("print in logcat","fourth");
 //                            System.out.println("here4");
                             for(final DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                                  final timeline_object post=new timeline_object();
 //                                System.out.println("here5");
 //                                System.out.println("here6");
-                                uploadDates.add(dataSnapshot1.child("uploadDate").getValue().toString());
-                                contentImages.add(dataSnapshot1.child("url").getValue().toString());
+                                //uploadDates.add(dataSnapshot1.child("uploadDate").getValue().toString());
+                                post.setDate(dataSnapshot1.child("uploadDate").getValue().toString());
+                               // contentImages.add(dataSnapshot1.child("url").getValue().toString());
+                                post.setContentImage(dataSnapshot1.child("url").getValue().toString());
 
                                 String ownerId=dataSnapshot1.child("owner").getValue().toString();
                                 DatabaseReference database=FirebaseDatabase.getInstance().getReference("users");
@@ -127,12 +123,17 @@ public class SearchActivity extends Activity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String name=dataSnapshot.child("name").getValue().toString();
-                                        owners.add(name);
-                                        descriptions.add("#"+dataSnapshot1.child("tag").getValue().toString()+": \n"+dataSnapshot1.child("title").getValue().toString());
+                                       // owners.add(name);
+                                        post.setOwnerName(name);
+                                    //    descriptions.add("#"+dataSnapshot1.child("tag").getValue().toString()+": \n"+dataSnapshot1.child("title").getValue().toString());
+                                        post.setText("#"+dataSnapshot1.child("tag").getValue().toString()+": \n"+dataSnapshot1.child("title").getValue().toString());
                                         String profilePic=dataSnapshot.child("profilePicUrl").getValue().toString();
-                                        profilePics.add(profilePic);
-                                        postTypes.add(spinner.getSelectedItem().toString());
+                                       // profilePics.add(profilePic);
+                                        post.setProfilePic(profilePic);
+                                      //  postTypes.add(spinner.getSelectedItem().toString());
+                                        post.setPostType(spinner.getSelectedItem().toString());
                                         progressBar.setVisibility(View.GONE);
+                                        posts.add(post);
                                         adapter.notifyDataSetChanged();
                                     }
 
@@ -168,16 +169,19 @@ public class SearchActivity extends Activity {
                                 String imageUrls=dataSnapshot1.child("imageUrls").getValue().toString();
                                 String firstUrl="no image";
                                 if(imageUrls.length()>5)firstUrl=extractFirstUrl(imageUrls);
+                                final timeline_object post=new timeline_object();
                                 System.out.println("fourth");
-                                contentImages.add(firstUrl);
-                                uploadDates.add(dataSnapshot1.child("time").getValue().toString());
-
+                                //contentImages.add(firstUrl);
+                                post.setContentImage(firstUrl);
+                                //uploadDates.add(dataSnapshot1.child("time").getValue().toString());
+                                post.setDate(dataSnapshot1.child("time").getValue().toString());
                                 final String txtUrl=dataSnapshot1.child("textUrl").getValue().toString();
                                 System.out.println("fifth");
                                 final String titleTag="#"+dataSnapshot1.child("tag").getValue().toString()+": \n"+dataSnapshot1.child("title").getValue().toString()+"\n";
                                 String ownerId=dataSnapshot1.child("owner").getValue().toString();
                                 String pid=dataSnapshot1.getKey();
-                                postIds.add(pid);
+                               // postIds.add(pid);
+                                post.setPostId(pid);
                                 System.out.println("six");
                                 DatabaseReference database=FirebaseDatabase.getInstance().getReference("users");
                                 database.child(ownerId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -185,15 +189,19 @@ public class SearchActivity extends Activity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String name=dataSnapshot.child("name").getValue().toString();
                                         System.out.println("seven");
-                                        owners.add(name);
+                                        //owners.add(name);
+                                        post.setOwnerName(name);
                                         String profilePic=dataSnapshot.child("profilePicUrl").getValue().toString();
-                                        profilePics.add(profilePic);
+                                        //profilePics.add(profilePic);
+                                        post.setProfilePic(profilePic);
                                         System.out.println("eight");
-                                        new BackGroundTask(descriptions,txtUrl,titleTag,recyclerView,adapter,context).execute();
-                                        postTypes.add(spinner.getSelectedItem().toString());
+                                        new BackGroundTask(posts,0,post,txtUrl,titleTag,recyclerView,adapter,context).execute();//This should be ..................................................
+                                       // postTypes.add(spinner.getSelectedItem().toString());
+                                        post.setPostType(spinner.getSelectedItem().toString());
                                         progressBar.setVisibility(View.GONE);
                                         System.out.println("ten");
-                                        adapter.notifyDataSetChanged();
+
+                                        //adapter.notifyDataSetChanged();
                                         System.out.println("nine");
                                     }
 

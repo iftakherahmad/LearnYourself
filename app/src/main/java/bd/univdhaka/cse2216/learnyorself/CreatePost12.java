@@ -212,7 +212,6 @@ public class CreatePost12 extends Activity {
         if(requestCode==79 && resultCode==RESULT_OK && data!=null){
             Uri uri=data.getData();
             displaySelectedImage(uri);
-
         }
     }
 

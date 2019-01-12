@@ -28,28 +28,33 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapter.ViewHolder>{
     Context context;
-    ArrayList<String> profilepics;
-    ArrayList<String> owners;
-    ArrayList<String>  postingDates;
-    ArrayList<String> contentImages;
-    ArrayList<String> details;
-    ArrayList<String> types;
-    ArrayList<String> postIds;
+//    ArrayList<String> profilepics=new ArrayList<>();
+//    ArrayList<String> owners=new ArrayList<>();
+//    ArrayList<String>  postingDates=new ArrayList<>();
+//    ArrayList<String> contentImages=new ArrayList<>();
+//    ArrayList<String> details=new ArrayList<>();
+//    ArrayList<String> types=new ArrayList<>();
+//    ArrayList<String> postIds=new ArrayList<>();
+    ArrayList<timeline_object> posts=new ArrayList<>();
     TextView description;
-
-    public TimelineViewAdapter(ArrayList<String> postIds,ArrayList<String> types,Context context,ArrayList<String> profilepics,ArrayList<String> owners,ArrayList<String> postingDates
-    ,ArrayList<String> contentImages,ArrayList<String> details
-    ){
-        this.postIds=postIds;
-        this.types=types;
+    public TimelineViewAdapter(ArrayList<timeline_object> posts,Context context){
+        this.posts=posts;
         this.context=context;
-        this.profilepics=profilepics;
-        this.owners=owners;
-        this.postingDates=postingDates;
-        this.contentImages=contentImages;
-        this.details=details;
-
     }
+
+//    public TimelineViewAdapter(ArrayList<String> postIds,ArrayList<String> types,Context context,ArrayList<String> profilepics,ArrayList<String> owners,ArrayList<String> postingDates
+//    ,ArrayList<String> contentImages,ArrayList<String> details
+//    ){
+//        this.postIds=postIds;
+//        this.types=types;
+//        this.context=context;
+//        this.profilepics=profilepics;
+//        this.owners=owners;
+//        this.postingDates=postingDates;
+//        this.contentImages=contentImages;
+//        this.details=details;
+//
+//    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -59,45 +64,45 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        if(types.get(i).equals("VIDEO")) {
-            Glide.with(context).asBitmap().load(profilepics.get(i)).into(viewHolder.profilePic);
-            viewHolder.owner.setText(owners.get(i));
-            viewHolder.postingDate.setText(postingDates.get(i));
-            viewHolder.details.setText(details.get(i));
-            Glide.with(context).asBitmap().load(contentImages.get(i)).into(viewHolder.contentImage);
+        if(posts.get(i).getPostType().equals("VIDEO")) {
+            Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
+            viewHolder.owner.setText(posts.get(i).getOwnerName());
+            viewHolder.postingDate.setText(posts.get(i).getDate());
+            viewHolder.details.setText(posts.get(i).getText());
+            Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     {
                         Intent intent = new Intent(context, Vedio_Play.class);
-                        intent.putExtra("url", contentImages.get(i));
+                        intent.putExtra("url", posts.get(i).getContentImage());
                         context.startActivity(intent);
                     }
 
                 }
             });
         }
-        else if(types.get(i).equals("QUESTION")){
-            System.out.println("first tut tut");
-            Glide.with(context).asBitmap().load(profilepics.get(i)).into(viewHolder.profilePic);
-            System.out.println("tut tut 0");
-            viewHolder.owner.setText(owners.get(i));
-            System.out.println("tut tut1");
-            viewHolder.postingDate.setText(postingDates.get(i));
-            System.out.println("tut tut2");
+        else if(posts.get(i).getPostType().equals("QUESTION")){
+          //  System.out.println("first tut tut");
+            Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
+          //  System.out.println("tut tut 0");
+            viewHolder.owner.setText(posts.get(i).getOwnerName());
+           // System.out.println("tut tut1");
+            viewHolder.postingDate.setText(posts.get(i).getDate());
+           // System.out.println("tut tut2");
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context,ViewPost.class);
                     intent.putExtra("type","questions");
-                    intent.putExtra("postId",postIds.get(i));
+                    intent.putExtra("postId",posts.get(i).getPostId());
                     context.startActivity(intent);
                 }
             });
-            System.out.println("tut tut5");
-            if(!contentImages.get(i).equals("no image"))Glide.with(context).asBitmap().load(contentImages.get(i)).into(viewHolder.contentImage);
-            System.out.println("tut tut6");
-            viewHolder.details.setText(details.get(i));
+          //  System.out.println("tut tut5");
+            if(!posts.get(i).getContentImage().equals("no image"))Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
+          //  System.out.println("tut tut6");
+            viewHolder.details.setText(posts.get(i).getText());
 
         }
 
@@ -105,7 +110,7 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
 
     @Override
     public int getItemCount() {
-        return details.size();
+        return posts.size();
     }
 
     public void setDeatails(String deatails) {

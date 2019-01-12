@@ -10,8 +10,9 @@ public class Post {
     private String owner;
     private String like;
     private String dislike;
+   // private String profilePic;
 
-    public Post(String postContentSequence,String title, String tag, String time, String textUrl, String imageUrls, String owner, String like, String dislike) {
+    public Post(String postContentSequence, String title, String tag, String time, String textUrl, String imageUrls, String owner, String like, String dislike) {
         this.title = title;
         this.tag = tag;
         this.postContentSequence=postContentSequence;
