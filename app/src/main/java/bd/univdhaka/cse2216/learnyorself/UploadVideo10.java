@@ -140,7 +140,7 @@ public class UploadVideo10 extends Activity {
                 String title=titleInput.getText().toString();
                 String tag=tagInput.getText().toString();
                 if(title.length()>=6 && tag.length()>=3){
-                    Vedio vedio=new Vedio(url,title,tag,owner,time);
+                    Vedio vedio=new Vedio(url,title,tag,time,owner,0,0,0,0);
                                 String vid=database.push().getKey();
                     database.child(vid).setValue(vedio).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

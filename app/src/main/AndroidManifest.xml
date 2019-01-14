@@ -30,7 +30,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".LoginActivity4" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".ViewPost"></activity>
+        <activity android:name=".ViewPost" />
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".ShowComments"></activity>
     </application>
 
 </manifest>

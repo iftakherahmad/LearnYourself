@@ -1,49 +1,49 @@
+
+
 package bd.univdhaka.cse2216.learnyorself;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+        import android.app.Activity;
+        import android.content.Context;
+        import android.content.ContextWrapper;
+        import android.content.Intent;
+        import android.net.Uri;
+        import android.os.Bundle;
+        import android.support.annotation.NonNull;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.ImageView;
+        import android.widget.LinearLayout;
+        import android.widget.ProgressBar;
+        import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ThrowOnExtraProperties;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+        import com.google.android.gms.tasks.OnCompleteListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.android.gms.tasks.Task;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.ThrowOnExtraProperties;
+        import com.google.firebase.storage.FirebaseStorage;
+        import com.google.firebase.storage.StorageReference;
+        import com.google.firebase.storage.UploadTask;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+        import java.io.BufferedInputStream;
+        import java.io.BufferedOutputStream;
+        import java.io.BufferedWriter;
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileOutputStream;
+        import java.io.FileWriter;
+        import java.text.SimpleDateFormat;
+        import java.util.ArrayList;
+        import java.util.Date;
 
-public class CreatePost12 extends Activity {
+public class CommentActivity extends Activity {
     private ImageView selectImageButton;
     private int flag;
     private ImageView addLinkButton;
     private Button postButton;
-    private EditText titleView;
-    private EditText tagView;
     private LinearLayout container;
     private ProgressBar progressBar;
     private EditText txt1;
@@ -60,8 +60,8 @@ public class CreatePost12 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_post12);
-        setTitle("Ask Something");
+        setContentView(R.layout.activity_comment);
+        setTitle("Comment Something");
         storage= FirebaseStorage.getInstance().getReference();
         database= FirebaseDatabase.getInstance().getReference();
         context=this;
@@ -73,8 +73,6 @@ public class CreatePost12 extends Activity {
         selectImageButton=findViewById(R.id.insertimage);
         addLinkButton=findViewById(R.id.insertlink);
         postButton=findViewById(R.id.post);
-        titleView=findViewById(R.id.title);
-        tagView=findViewById(R.id.tag);
         container=findViewById(R.id.container);
         txt1=findViewById(R.id.txt1);
         editTexts.add(txt1);
@@ -83,19 +81,16 @@ public class CreatePost12 extends Activity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title=titleView.getText().toString();
-                String tag=tagView.getText().toString();
-                if(title.length()<3 || title.length()>20 ||tag.length()<3 || tag.length()>20){
-                    Toast.makeText(context,"Title and tag should have at least 3 and at most 20 characters.",Toast.LENGTH_SHORT).show();
-                }
-                 else if(flag==1){
+//                String title="";
+//                String tag="";
+                if(flag==1){
                     Toast.makeText(context,"Just posted or posting.",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                     flag=1;
+                    flag=1;
                     progressBar.setVisibility(View.VISIBLE);
                     postContent();
-                   // Toast.makeText(context,"hee",Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context,"hee",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -130,7 +125,7 @@ public class CreatePost12 extends Activity {
             uploadFiles(textUri);
 
         }catch (Exception e){
-            Toast.makeText(CreatePost12.this,"IO Exception occoured",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CommentActivity.this,"IO Exception occoured",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -150,7 +145,7 @@ public class CreatePost12 extends Activity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 textFileUrl=taskSnapshot.getDownloadUrl().toString();
                 uploadedImageCount=0;
-              //  Toast.makeText(context,"hee",Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(context,"hee",Toast.LENGTH_SHORT).show();
                 uploadImages();
 
             }
@@ -168,24 +163,28 @@ public class CreatePost12 extends Activity {
             String time=formatter.format(date);
             String owner=authenticator.getCurrentUser().getUid();
             try {
-                String title = titleView.getText().toString();
-                String tag = tagView.getText().toString();
+//                String title = titleView.getText().toString();
+//                String tag = tagView.getText().toString();
 
-                String postType=getIntent().getStringExtra("postType");
-                System.out.println("post Type:"+postType);
-                DatabaseReference postTable = database.child(postType);
+                String parentId=getIntent().getStringExtra("postId");// you need to send id of parent post.............................................................
+                System.out.println("post Type:"+parentId);
+                DatabaseReference postTable = database.child("comments/"+parentId);
                 String postId = postTable.push().getKey();
-                String title_tag=title+"_"+tag;
-                Post post = new Post(postContentSequence, title, tag, time, textFileUrl, imageUrls, owner, 0 , 0 ," "+new StringBuilder(postId).reverse().toString()+" " +
-                        "",title_tag,0);
-                postTable.child(postId).setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            //    String title_tag=title+"_"+tag;
+                Comment comment=new Comment(0,0,imageUrls,owner,postContentSequence,textFileUrl,0,time);
+//                Post post = new Post(postContentSequence, title, tag, time, textFileUrl, imageUrls, owner, 0 , 0 ," "+new StringBuilder(postId).reverse().toString()+" " +
+//                        "",title_tag,0);
+                postTable.child(postId).setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(CreatePost12.this, "Posted successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CommentActivity.this, "Posted successfully", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+
                         } else {
-                           flag=0;
+                            flag=0;
                         }
                     }
                 });
@@ -234,5 +233,11 @@ public class CreatePost12 extends Activity {
         intent.setType("application/jpeg");
         startActivityForResult(intent,79);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
+
 

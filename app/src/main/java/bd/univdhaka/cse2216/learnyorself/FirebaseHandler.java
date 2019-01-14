@@ -16,6 +16,9 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class FirebaseHandler {
     FirebaseAuth authenticator;
     DatabaseReference database;
@@ -59,12 +62,14 @@ public class FirebaseHandler {
                                             catch (NullPointerException e){
                                                 uid=userTable.push().getKey();
                                             }
-                                            User user=new User(name,profession,institution,profilePicUrl,uid,email);
+                                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                            Date date = new Date();
+                                            String time=formatter.format(date);
+                                            User user=new User(name,profession,institution,profilePicUrl,time,email,uid,0,0,0);
                                             userTable.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     Intent intent1=new Intent(context,LoginActivity5.class);
-
                                                     context.startActivity(intent1);
                                                 }
                                             });

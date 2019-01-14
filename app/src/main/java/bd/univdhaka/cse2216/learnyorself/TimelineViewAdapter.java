@@ -84,7 +84,7 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
         }
         else if(posts.get(i).getPostType().equals("QUESTION")){
           //  System.out.println("first tut tut");
-            Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
+            if(posts.get(i).getProfilePic()!=null || posts.get(i).getProfilePic().length()>3)Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
           //  System.out.println("tut tut 0");
             viewHolder.owner.setText(posts.get(i).getOwnerName());
            // System.out.println("tut tut1");
@@ -100,11 +100,28 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
                 }
             });
           //  System.out.println("tut tut5");
-            if(!posts.get(i).getContentImage().equals("no image"))Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
+            if(!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage()==null))Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
           //  System.out.println("tut tut6");
             viewHolder.details.setText(posts.get(i).getText());
 
         }
+        viewHolder.writeAnser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,CommentActivity.class);
+                intent.putExtra("postId",posts.get(i).getPostId());
+                context.startActivity(intent);
+            }
+        });
+        viewHolder.ansers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,ShowComments.class);
+                intent.putExtra("type","questions");
+                intent.putExtra("parentId",posts.get(i).getPostId());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

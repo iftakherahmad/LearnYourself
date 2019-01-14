@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@color/back"
+tools:context=".CommentActivity">
+
+
+<ScrollView
+    android:id="@+id/postcontent"
+    android:layout_width="match_parent"
+    android:layout_height="450dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/container"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:hint="Start writing from here"
+            android:textColor="@color/black"
+            android:id="@+id/txt1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>
+<LinearLayout
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/aqua"
+        android:text="Post"
+        android:id="@+id/post"
+        android:layout_marginLeft="5dp"
+        android:padding="12dp"
+        android:drawableLeft="@drawable/login"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_image_black_24dp"
+            android:background="@color/aqua"
+            android:padding="12dp"
+            android:id="@+id/insertimage"
+            android:tooltipText="insert image"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/insertimage"
+            android:src="@drawable/ic_insert_link_black_24dp"
+            android:padding="12dp"
+            android:id="@+id/insertlink"
+            android:tooltipText="insert link"
+            android:background="@color/aqua"
+            />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_toLeftOf="@+id/insertlink"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:progressTint="#4e067e"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center"
+                android:visibility="gone"
+
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
+
+</LinearLayout>
