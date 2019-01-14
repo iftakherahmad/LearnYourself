@@ -37,10 +37,17 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
 //    ArrayList<String> postIds=new ArrayList<>();
     ArrayList<timeline_object> posts=new ArrayList<>();
     TextView description;
+    private String parentId;
     public TimelineViewAdapter(ArrayList<timeline_object> posts,Context context){
         this.posts=posts;
         this.context=context;
     }
+    public TimelineViewAdapter(ArrayList<timeline_object> posts,Context context,String parentId){
+        this.posts=posts;
+        this.context=context;
+        this.parentId=parentId;
+    }
+
 
 //    public TimelineViewAdapter(ArrayList<String> postIds,ArrayList<String> types,Context context,ArrayList<String> profilepics,ArrayList<String> owners,ArrayList<String> postingDates
 //    ,ArrayList<String> contentImages,ArrayList<String> details
@@ -105,6 +112,25 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
             viewHolder.details.setText(posts.get(i).getText());
 
         }
+        else if(posts.get(i).getPostType().equals("ANSER")){
+            if(posts.get(i).getProfilePic()!=null || posts.get(i).getProfilePic().length()>3)Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
+            viewHolder.owner.setText(posts.get(i).getOwnerName());
+            viewHolder.postingDate.setText(posts.get(i).getDate());
+            System.out.println("....................------------------------------.................++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context,PresentAComment.class);
+                    intent.putExtra("type","comments");
+                    intent.putExtra("postId",posts.get(i).getPostId());
+                    intent.putExtra("parentId",parentId);
+                    context.startActivity(intent);
+                }
+            });
+            if(!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage()==null))Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
+
+            viewHolder.details.setText(posts.get(i).getText());
+        }
         viewHolder.writeAnser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,15 +139,20 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
                 context.startActivity(intent);
             }
         });
-        viewHolder.ansers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context,ShowComments.class);
-                intent.putExtra("type","questions");
-                intent.putExtra("parentId",posts.get(i).getPostId());
-                context.startActivity(intent);
-            }
-        });
+        if(!posts.get(i).getPostType().equals("ANSER")) {
+            viewHolder.ansers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowComments.class);
+                    intent.putExtra("type", "questions");
+                    intent.putExtra("parentId", posts.get(i).getPostId());
+                    context.startActivity(intent);
+                }
+            });
+        }
+        else {
+            viewHolder.ansers.setVisibility(View.GONE);
+        }
 
     }
 
@@ -160,7 +191,5 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
             writeAnser=itemView.findViewById(R.id.addanser);
         }
     }
-
-
 
 }

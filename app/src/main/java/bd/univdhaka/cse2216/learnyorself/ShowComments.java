@@ -49,6 +49,7 @@ public class ShowComments extends Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_show_comments);
+            setTitle("Comments");
         comments= FirebaseDatabase.getInstance().getReference("comments");
         parentId=getIntent().getStringExtra("parentId");
         progressBar =findViewById(R.id.progressbar);
@@ -64,7 +65,7 @@ public class ShowComments extends Activity {
         recyclerView=findViewById(R.id.recyclerView);
         System.out.println("....1");
         //adapter=new TimelineViewAdapter(postIds,postTypes,getActivity(),profilepics,owners,postingDates,contentImages,details);
-        adapter=new TimelineViewAdapter(timeline_posts,this);
+        adapter=new TimelineViewAdapter(timeline_posts,this,parentId);
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
         System.out.println("........2");
@@ -173,7 +174,7 @@ public class ShowComments extends Activity {
                 post.setProfilePic(profilePicUrl);
                 //profilepics.set(idx,profilePicUrl);
                 // postTypes.add("QUESTION");
-                post.setPostType("QUESTION");
+                post.setPostType("ANSER");
                 //postTypes.set(index,"QUESTION");
                 progressBar.setVisibility(View.GONE);
                 String titleTag="";
