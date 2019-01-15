@@ -2,6 +2,7 @@ package bd.univdhaka.cse2216.learnyorself;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,6 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,19 +35,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapter.ViewHolder>{
     Context context;
-//    ArrayList<String> profilepics=new ArrayList<>();
-//    ArrayList<String> owners=new ArrayList<>();
-//    ArrayList<String>  postingDates=new ArrayList<>();
-//    ArrayList<String> contentImages=new ArrayList<>();
-//    ArrayList<String> details=new ArrayList<>();
-//    ArrayList<String> types=new ArrayList<>();
-//    ArrayList<String> postIds=new ArrayList<>();
     ArrayList<timeline_object> posts=new ArrayList<>();
     TextView description;
     private String parentId;
     public TimelineViewAdapter(ArrayList<timeline_object> posts,Context context){
         this.posts=posts;
         this.context=context;
+
     }
     public TimelineViewAdapter(ArrayList<timeline_object> posts,Context context,String parentId){
         this.posts=posts;
@@ -49,19 +50,6 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
     }
 
 
-//    public TimelineViewAdapter(ArrayList<String> postIds,ArrayList<String> types,Context context,ArrayList<String> profilepics,ArrayList<String> owners,ArrayList<String> postingDates
-//    ,ArrayList<String> contentImages,ArrayList<String> details
-//    ){
-//        this.postIds=postIds;
-//        this.types=types;
-//        this.context=context;
-//        this.profilepics=profilepics;
-//        this.owners=owners;
-//        this.postingDates=postingDates;
-//        this.contentImages=contentImages;
-//        this.details=details;
-//
-//    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -135,7 +123,9 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,CommentActivity.class);
+                intent.putExtra("path",posts.get(i).getPath());
                 intent.putExtra("postId",posts.get(i).getPostId());
+                intent.putExtra("postType",posts.get(i).getPostType());
                 context.startActivity(intent);
             }
         });
@@ -153,6 +143,61 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
         else {
             viewHolder.ansers.setVisibility(View.GONE);
         }
+        final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(posts.get(i).getPath());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                viewHolder.likeNumber.setText((String.valueOf( dataSnapshot.child("like").getChildrenCount())));
+                if(dataSnapshot.child("like").hasChild(FirebaseAuth.getInstance().getUid())){
+                    viewHolder.like.setBackgroundColor(Color.BLUE);
+                }
+                viewHolder.dislikeNumber.setText(String.valueOf(dataSnapshot.child("dislike").getChildrenCount()));
+                if(dataSnapshot.child("dislike").hasChild(FirebaseAuth.getInstance().getUid())){
+                    viewHolder.dislike.setBackgroundColor(Color.BLUE);
+                }
+                if(posts.get(i).getPostType().equals("QUESTION")){
+                    viewHolder.commentNumber.setText(String.valueOf(dataSnapshot.child("ansers").getChildrenCount()));
+                }
+                if(posts.get(i).getPostType().equals("VIDEO")){
+                    viewHolder.commentNumber.setText(String.valueOf(dataSnapshot.child("comments").getChildrenCount()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        viewHolder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.like.setBackgroundColor(Color.BLUE);
+                updateDatabaseForLike(posts.get(i).getPath());
+            }
+        });
+        viewHolder.dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.dislike.setBackgroundColor(Color.BLUE);
+                updateDatabaseForDislike(posts.get(i).getPath());
+            }
+        });
+       // updateLikeColor(posts.get(i).getPath(),viewHolder.like);
+
+
+    }
+
+
+    private void updateDatabaseForDislike(String path) {
+        final DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(path);
+        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        databaseReference.child("dislike").child(firebaseAuth.getUid()).setValue("true");
+    }
+
+    private void updateDatabaseForLike(String path) {
+        final DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(path);
+        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        databaseReference.child("like").child(firebaseAuth.getUid()).setValue("true");
 
     }
 
@@ -165,21 +210,29 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
         description.setText(deatails);
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView profilePic;
         TextView owner;
         TextView postingDate;
         ImageView contentImage;
         TextView details;
+        TextView likeNumber;
+        TextView dislikeNumber;
+        TextView commentNumber;
         ImageButton like;
         ImageButton dislike;
         Button ansers;
         ImageButton writeAnser;
         LinearLayout parentLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             profilePic=itemView.findViewById(R.id.profilepic);
             owner=itemView.findViewById(R.id.postowner);
+            likeNumber=itemView.findViewById(R.id.likenumber);
+            dislikeNumber=itemView.findViewById(R.id.dislikenumber);
+            commentNumber=itemView.findViewById(R.id.commentnumber);
             postingDate=itemView.findViewById(R.id.postingdate);
             contentImage=itemView.findViewById(R.id.contentimage);
             details=itemView.findViewById(R.id.details);

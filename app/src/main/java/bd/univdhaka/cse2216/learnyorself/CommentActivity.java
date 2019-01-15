@@ -169,13 +169,20 @@ public class CommentActivity extends Activity {
                 String parentId=getIntent().getStringExtra("postId");// you need to send id of parent post.............................................................
                 System.out.println("post Type:"+parentId);
                 DatabaseReference postTable = database.child("comments/"+parentId);
-                String postId = postTable.push().getKey();
 
-            //    String title_tag=title+"_"+tag;
+                DatabaseReference dbr=FirebaseDatabase.getInstance().getReference(getIntent().getStringExtra("path"));
+                String commentId = postTable.push().getKey();
+                if(getIntent().getStringExtra("postType").equals("VIDEO")){
+                    dbr.child("comments").child(commentId).setValue("true");
+                }
+                if(getIntent().getStringExtra("postType").equals("QUESTION")){
+                    dbr.child("ansers").child(commentId).setValue("true");
+                }
+
                 Comment comment=new Comment(0,0,imageUrls,owner,postContentSequence,textFileUrl,0,time);
 //                Post post = new Post(postContentSequence, title, tag, time, textFileUrl, imageUrls, owner, 0 , 0 ," "+new StringBuilder(postId).reverse().toString()+" " +
 //                        "",title_tag,0);
-                postTable.child(postId).setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                postTable.child(commentId).setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {

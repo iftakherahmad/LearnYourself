@@ -91,12 +91,8 @@ public class SearchActivity extends Activity {
     private void updateRecyclerView(String query) {
      posts.clear();
         String type=spinner.getSelectedItem().toString();
-//        Log.d("print in logcat","second");
-//        System.out.println("here2");
         if(type.equals("VIDEO")){///if video is searched........................................................................
             DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("vedios");
-//            Log.d("print in logcat","third");
-//            System.out.println("here3");
             databaseReference
                     .orderByChild("title")
                     .startAt("%"+query+"%")
@@ -116,7 +112,7 @@ public class SearchActivity extends Activity {
                                 post.setDate(dataSnapshot1.child("uploadDate").getValue().toString());
                                // contentImages.add(dataSnapshot1.child("url").getValue().toString());
                                 post.setContentImage(dataSnapshot1.child("url").getValue().toString());
-
+                                post.setPath("vedios/"+dataSnapshot1.getKey());
                                 String ownerId=dataSnapshot1.child("owner").getValue().toString();
                                 DatabaseReference database=FirebaseDatabase.getInstance().getReference("users");
                                 database.child(ownerId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -156,7 +152,7 @@ public class SearchActivity extends Activity {
             System.out.println("first");
             databaseReference
                     .orderByChild("title")
-                    .startAt("%${+query}%")
+                    .startAt("%"+query+"%")
                     .endAt(query+"\uf8ff")
                     .limitToFirst(20)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,6 +169,7 @@ public class SearchActivity extends Activity {
                                 System.out.println("fourth");
                                 //contentImages.add(firstUrl);
                                 post.setContentImage(firstUrl);
+                                post.setPath("questions/"+dataSnapshot.getKey());
                                 //uploadDates.add(dataSnapshot1.child("time").getValue().toString());
                                 post.setDate(dataSnapshot1.child("time").getValue().toString());
                                 final String txtUrl=dataSnapshot1.child("textUrl").getValue().toString();

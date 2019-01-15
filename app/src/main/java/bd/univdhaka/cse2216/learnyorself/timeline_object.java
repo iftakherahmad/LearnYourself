@@ -10,10 +10,11 @@ public class timeline_object {
     private String contentImage;
     private String postId;
     private String postType;
+    private String path;
     public timeline_object(){
 
     }
-    public timeline_object(String postType,String titile, String tag, String text, String profilePic, String ownerName, String date, String contentImage, String postId) {
+    public timeline_object(String postType,String titile, String tag, String text, String profilePic, String ownerName, String date, String contentImage, String postId,String path) {
         this.titile = titile;
         this.tag = tag;
         this.postType=postType;
@@ -23,7 +24,17 @@ public class timeline_object {
         this.date = date;
         this.contentImage = contentImage;
         this.postId = postId;
+        this.path=path;
     }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public void setPostType(String postType){
         this.postType=postType;
     }

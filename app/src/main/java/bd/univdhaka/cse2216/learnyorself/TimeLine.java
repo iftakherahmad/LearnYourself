@@ -28,14 +28,6 @@ public class TimeLine extends Fragment {
      RecyclerView recyclerView;
     TimelineViewAdapter adapter;
     Context context;
-//    ArrayList<String> profilepics=new ArrayList<>();
-//    ArrayList<String> owners=new ArrayList<>();
-//    ArrayList<String>  postingDates=new ArrayList<>();
-//    ArrayList<String> contentImages=new ArrayList<>();
-//    ArrayList<String> details=new ArrayList<>();
-//    ArrayList<String> postTypes=new ArrayList<>();
-//    ArrayList<String> postIds=new ArrayList<>();
-//    ArrayList<String> titleTags=new ArrayList<>();
     ArrayList<timeline_object> timeline_posts=new ArrayList<>();
     DatabaseReference posts;
     private int index=0;
@@ -44,14 +36,20 @@ public class TimeLine extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_time_line, container, false);
-        posts= FirebaseDatabase.getInstance().getReference("questions");
-        progressBar =view.findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.VISIBLE);
-        recyclerHandler(view);
+        try {
+            // Inflate the layout for this fragment
+            View view = inflater.inflate(R.layout.fragment_time_line, container, false);
+            posts = FirebaseDatabase.getInstance().getReference("questions");
+            progressBar = view.findViewById(R.id.progressbar);
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerHandler(view);
 
         return view;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void recyclerHandler(View view){
@@ -65,25 +63,6 @@ public class TimeLine extends Fragment {
         System.out.println("........2");
         recyclerView.setLayoutManager(layoutManager);
         fetchData();
-//        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                int totalItem=layoutManager.getItemCount();
-//                System.out.println(".......3");
-//                int scrolledOutItem=layoutManager.findFirstVisibleItemPosition();
-//                int onScreen=layoutManager.getChildCount();
-//                if(totalItem<=scrolledOutItem+onScreen){
-//                    System.out.println(".........4");
-//                    fetchData();
-//                }
-//            }
-//        });
 
 
     }
@@ -97,13 +76,7 @@ public class TimeLine extends Fragment {
 
                 for (DataSnapshot dataSnapshot : dataSnapshot1.getChildren()){
                     index++;
-//                    profilepics.add("");
-//                    owners.add("");
-//                    postingDates.add("");
-//                    contentImages.add("");
-//                    postTypes.add("");
-//                    postIds.add("");
-//                    titleTags.add("");
+
                     System.out.println("........5");
                     timeline_object post=new timeline_object();
 
@@ -114,6 +87,7 @@ public class TimeLine extends Fragment {
                    // postingDates.set(index,postingDate);
                     System.out.println("ind.."+index+"postingDate......."+postingDate);
                 String postId=dataSnapshot.getKey();
+                post.setPath("questions/"+postId);
                 post.setPostId(postId);
                 //postIds.add(postId);
                     System.out.println("index:"+index);

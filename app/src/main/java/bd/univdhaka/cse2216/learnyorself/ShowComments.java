@@ -30,14 +30,6 @@ public class ShowComments extends Activity {
     RecyclerView recyclerView;
     TimelineViewAdapter adapter;
     Context context;
-    //    ArrayList<String> profilepics=new ArrayList<>();
-//    ArrayList<String> owners=new ArrayList<>();
-//    ArrayList<String>  postingDates=new ArrayList<>();
-//    ArrayList<String> contentImages=new ArrayList<>();
-//    ArrayList<String> details=new ArrayList<>();
-//    ArrayList<String> postTypes=new ArrayList<>();
-//    ArrayList<String> postIds=new ArrayList<>();
-//    ArrayList<String> titleTags=new ArrayList<>();
     ArrayList<timeline_object> timeline_posts=new ArrayList<>();
     DatabaseReference comments;
     private int index=0;
@@ -68,7 +60,6 @@ public class ShowComments extends Activity {
         adapter=new TimelineViewAdapter(timeline_posts,this,parentId);
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
-        System.out.println("........2");
         recyclerView.setLayoutManager(layoutManager);
         fetchData();
 
@@ -83,13 +74,6 @@ public class ShowComments extends Activity {
 
                 for (DataSnapshot dataSnapshot : dataSnapshot1.getChildren()){
                     index++;
-//                    profilepics.add("");
-//                    owners.add("");
-//                    postingDates.add("");
-//                    contentImages.add("");
-//                    postTypes.add("");
-//                    postIds.add("");
-//                    titleTags.add("");
                     System.out.println("........5");
                     timeline_object post=new timeline_object();
 
@@ -101,6 +85,7 @@ public class ShowComments extends Activity {
                     System.out.println("ind.."+index+"postingDate......."+postingDate);
                     String postId=dataSnapshot.getKey();
                     post.setPostId(postId);
+                    post.setPath("comments/"+parentId+"/"+postId);
                     //postIds.add(postId);
                     System.out.println("index:"+index);
                     // postIds.set(index,postId);
@@ -116,30 +101,7 @@ public class ShowComments extends Activity {
 
                     //final String titleTag = "#" + dataSnapshot.child("tag").getValue().toString() + ": \n" + dataSnapshot.child("title").getValue().toString() + "\n";
                     addListenerInUserTable(userTable,post,textUrl,index);
-//                userTable.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        String name = dataSnapshot.child("name").getValue().toString();
-//                        System.out.println("...................................hh");
-//                        //owners.add(name);
-//                        System.out.println("index............"+index);
-//                        owners.set(index,name);
-//                        System.out.println(".......7");
-//                        String profilePicUrl = dataSnapshot.child("profilePicUrl").getValue().toString();
-//                        //profilepics.add(profilePicUrl);
-//                        profilepics.set(index,profilePicUrl);
-//                       // postTypes.add("QUESTION");
-//                        postTypes.set(index,"QUESTION");
-//                        progressBar.setVisibility(View.GONE);
-//                        new BackGroundTask(details, textUrl, titleTag, recyclerView, adapter, getActivity()).execute();
-//                        System.out.println("..........8");
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
+
 
                 }
             }
@@ -155,13 +117,7 @@ public class ShowComments extends Activity {
         userTable.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                while(idx!=timeline_posts.size()){
-//                    try {
-//                        sleep(500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+//
                 String name = dataSnapshot.child("name").getValue().toString();
                 System.out.println("...............................hh");
                 //  owners.add(name);
