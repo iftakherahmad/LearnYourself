@@ -44,7 +44,7 @@ public class TimeLine extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
             recyclerHandler(view);
 
-        return view;
+        return view;//ddfdfds
         }
         catch (Exception e){
             e.printStackTrace();
