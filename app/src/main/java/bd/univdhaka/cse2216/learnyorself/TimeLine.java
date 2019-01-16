@@ -36,20 +36,21 @@ public class TimeLine extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        try {
-            // Inflate the layout for this fragment
+
+            // Inflate the layouft for this fragment
             View view = inflater.inflate(R.layout.fragment_time_line, container, false);
+        try {
             posts = FirebaseDatabase.getInstance().getReference("questions");
             progressBar = view.findViewById(R.id.progressbar);
             progressBar.setVisibility(View.VISIBLE);
             recyclerHandler(view);
 
-        return view;//ddfdfds
+
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return view;
     }
 
     private void recyclerHandler(View view){
@@ -104,30 +105,7 @@ public class TimeLine extends Fragment {
 
                 final String titleTag = "#" + dataSnapshot.child("tag").getValue().toString() + ": \n" + dataSnapshot.child("title").getValue().toString() + "\n";
                 addListenerInUserTable(userTable,post,textUrl,titleTag,index);
-//                userTable.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        String name = dataSnapshot.child("name").getValue().toString();
-//                        System.out.println("...................................hh");
-//                        //owners.add(name);
-//                        System.out.println("index............"+index);
-//                        owners.set(index,name);
-//                        System.out.println(".......7");
-//                        String profilePicUrl = dataSnapshot.child("profilePicUrl").getValue().toString();
-//                        //profilepics.add(profilePicUrl);
-//                        profilepics.set(index,profilePicUrl);
-//                       // postTypes.add("QUESTION");
-//                        postTypes.set(index,"QUESTION");
-//                        progressBar.setVisibility(View.GONE);
-//                        new BackGroundTask(details, textUrl, titleTag, recyclerView, adapter, getActivity()).execute();
-//                        System.out.println("..........8");
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
+
 
             }
             }
@@ -143,13 +121,7 @@ public class TimeLine extends Fragment {
         userTable.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                while(idx!=timeline_posts.size()){
-//                    try {
-//                        sleep(500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+//
                 String name = dataSnapshot.child("name").getValue().toString();
                 System.out.println("...............................hh");
               //  owners.add(name);

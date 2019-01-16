@@ -40,15 +40,19 @@ public class ShowComments extends Activity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_show_comments);
-            setTitle("Comments");
-        comments= FirebaseDatabase.getInstance().getReference("comments");
-        parentId=getIntent().getStringExtra("parentId");
-        progressBar =findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.VISIBLE);
+            try {
+                setContentView(R.layout.activity_show_comments);
+                setTitle("Comments");
+                comments = FirebaseDatabase.getInstance().getReference("comments");
+                parentId = getIntent().getStringExtra("parentId");
+                progressBar = findViewById(R.id.progressbar);
+                progressBar.setVisibility(View.VISIBLE);
 
-        recyclerHandler();
-
+                recyclerHandler();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 
     }
 
@@ -66,6 +70,7 @@ public class ShowComments extends Activity {
     }
 
     private void fetchData() {
+        System.out.println("Parent id................"+parentId);
         comments.child(parentId).orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot1) {
@@ -153,11 +158,6 @@ public class ShowComments extends Activity {
         String url1=remaining.substring(1,urlLength);
         return url1;
     }
-
-
-
-
-
 
 
 

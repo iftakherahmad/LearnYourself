@@ -71,13 +71,15 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
                     {
                         Intent intent = new Intent(context, Vedio_Play.class);
                         intent.putExtra("url", posts.get(i).getContentImage());
+                        intent.putExtra("type","vedios");
+                        intent.putExtra("parentId",posts.get(i).getPostId());
                         context.startActivity(intent);
                     }
 
                 }
             });
         }
-        else if(posts.get(i).getPostType().equals("QUESTION")){
+        else if(posts.get(i).getPostType().equals("QUESTION")){/////////////////this part is for question
           //  System.out.println("first tut tut");
             if(posts.get(i).getProfilePic()!=null || posts.get(i).getProfilePic().length()>3)Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
           //  System.out.println("tut tut 0");
@@ -123,8 +125,10 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,CommentActivity.class);
+                System.out.println("Posts...........+++++++++++++++++++++++++++"+posts.get(i).getPostId());
                 intent.putExtra("path",posts.get(i).getPath());
                 intent.putExtra("postId",posts.get(i).getPostId());
+                intent.putExtra("parentId",posts.get(i).getPostId());
                 intent.putExtra("postType",posts.get(i).getPostType());
                 context.startActivity(intent);
             }
@@ -134,7 +138,12 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowComments.class);
-                    intent.putExtra("type", "questions");
+                    if(posts.get(i).getPostType().equals("VIDEO"))
+                        intent.putExtra("type","vedios");
+                    else
+                        intent.putExtra("type", "questions");
+                    intent.putExtra("path",posts.get(i).getPath());
+                    intent.putExtra("postId",posts.get(i).getPostId());
                     intent.putExtra("parentId", posts.get(i).getPostId());
                     context.startActivity(intent);
                 }

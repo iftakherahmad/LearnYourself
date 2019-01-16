@@ -21,9 +21,12 @@ package bd.univdhaka.cse2216.learnyorself;
         import com.google.android.gms.tasks.OnSuccessListener;
         import com.google.android.gms.tasks.Task;
         import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ThrowOnExtraProperties;
+        import com.google.firebase.database.ValueEventListener;
         import com.google.firebase.storage.FirebaseStorage;
         import com.google.firebase.storage.StorageReference;
         import com.google.firebase.storage.UploadTask;
@@ -61,33 +64,33 @@ public class CommentActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+        try{
         setTitle("Comment Something");
-        storage= FirebaseStorage.getInstance().getReference();
-        database= FirebaseDatabase.getInstance().getReference();
-        context=this;
-        progressBar=findViewById(R.id.progressbar);
-        authenticator=FirebaseAuth.getInstance();
-        editTexts=new ArrayList<>();
-        flag=0;
-        uris =new ArrayList<>();
-        selectImageButton=findViewById(R.id.insertimage);
-        addLinkButton=findViewById(R.id.insertlink);
-        postButton=findViewById(R.id.post);
-        container=findViewById(R.id.container);
-        txt1=findViewById(R.id.txt1);
+        storage = FirebaseStorage.getInstance().getReference();
+        database = FirebaseDatabase.getInstance().getReference();
+        context = this;
+        progressBar = findViewById(R.id.progressbar);
+        authenticator = FirebaseAuth.getInstance();
+        editTexts = new ArrayList<>();
+        flag = 0;
+        uris = new ArrayList<>();
+        selectImageButton = findViewById(R.id.insertimage);
+        addLinkButton = findViewById(R.id.insertlink);
+        postButton = findViewById(R.id.post);
+        container = findViewById(R.id.container);
+        txt1 = findViewById(R.id.txt1);
         editTexts.add(txt1);
-        postContentSequence="txt";
-        dynamicView=new DynamicView(this);
+        postContentSequence = "txt";
+        dynamicView = new DynamicView(this);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                String title="";
 //                String tag="";
-                if(flag==1){
-                    Toast.makeText(context,"Just posted or posting.",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    flag=1;
+                if (flag == 1) {
+                    Toast.makeText(context, "Just posted or posting.", Toast.LENGTH_SHORT).show();
+                } else {
+                    flag = 1;
                     progressBar.setVisibility(View.VISIBLE);
                     postContent();
                     // Toast.makeText(context,"hee",Toast.LENGTH_SHORT).show();
@@ -100,6 +103,10 @@ public class CommentActivity extends Activity {
                 selectImage();
             }
         });
+    }
+    catch (Exception e){
+            e.printStackTrace();
+    }
     }
 
     private void postContent() {
@@ -166,10 +173,10 @@ public class CommentActivity extends Activity {
 //                String title = titleView.getText().toString();
 //                String tag = tagView.getText().toString();
 
-                String parentId=getIntent().getStringExtra("postId");// you need to send id of parent post.............................................................
+                final String parentId=getIntent().getStringExtra("postId");// you need to send id of parent post.............................................................
                 System.out.println("post Type:"+parentId);
                 DatabaseReference postTable = database.child("comments/"+parentId);
-
+                System.out.println(getIntent().getStringExtra("path")+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 DatabaseReference dbr=FirebaseDatabase.getInstance().getReference(getIntent().getStringExtra("path"));
                 String commentId = postTable.push().getKey();
                 if(getIntent().getStringExtra("postType").equals("VIDEO")){
@@ -184,9 +191,54 @@ public class CommentActivity extends Activity {
 //                        "",title_tag,0);
                 postTable.child(commentId).setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    public void onComplete(@NonNull Task<Void> task) {//                      write to database
                         if (task.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
+                            DatabaseReference dbr1;
+                            if (getIntent().getStringExtra("postType").equals("VIDEO")){
+                                dbr1 = FirebaseDatabase.getInstance().getReference("vedios/" + parentId);
+                                dbr1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String owner=dataSnapshot.child("owner").getValue().toString();
+                                        String ip=FirebaseAuth.getInstance().getUid();
+                                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                        Date date = new Date();
+                                        String time=formatter.format(date);
+                                        NotificationObjectForSend notification=new NotificationObjectForSend(ip,parentId,time,"new comment","VIDEO");
+                                        DatabaseReference dbr2=FirebaseDatabase.getInstance().getReference("notifications/"+owner);
+                                        String key=dbr2.push().getKey();
+                                        dbr2.child(key).setValue(notification);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                             }
+                            if (getIntent().getStringExtra("postType").equals("QUESTION")){
+                                dbr1 = FirebaseDatabase.getInstance().getReference("questions/" + parentId);
+                                dbr1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String owner=dataSnapshot.child("owner").getValue().toString();
+                                        String ip=FirebaseAuth.getInstance().getUid();
+                                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                        Date date = new Date();
+                                        String time=formatter.format(date);
+                                        NotificationObjectForSend notification=new NotificationObjectForSend(ip,parentId,time,"new comment","QUESTION");
+                                        DatabaseReference dbr2=FirebaseDatabase.getInstance().getReference("notifications/"+owner);
+                                        String key=dbr2.push().getKey();
+                                        dbr2.child(key).setValue(notification);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
                             Toast.makeText(CommentActivity.this, "Posted successfully", Toast.LENGTH_SHORT).show();
                             onBackPressed();
 

@@ -107,11 +107,11 @@ public class SearchActivity extends Activity {
                             for(final DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                                   final timeline_object post=new timeline_object();
 //                                System.out.println("here5");
-//                                System.out.println("here6");
-                                //uploadDates.add(dataSnapshot1.child("uploadDate").getValue().toString());
+//
                                 post.setDate(dataSnapshot1.child("uploadDate").getValue().toString());
                                // contentImages.add(dataSnapshot1.child("url").getValue().toString());
                                 post.setContentImage(dataSnapshot1.child("url").getValue().toString());
+                                post.setPostId(dataSnapshot1.getKey());
                                 post.setPath("vedios/"+dataSnapshot1.getKey());
                                 String ownerId=dataSnapshot1.child("owner").getValue().toString();
                                 DatabaseReference database=FirebaseDatabase.getInstance().getReference("users");
@@ -169,7 +169,7 @@ public class SearchActivity extends Activity {
                                 System.out.println("fourth");
                                 //contentImages.add(firstUrl);
                                 post.setContentImage(firstUrl);
-                                post.setPath("questions/"+dataSnapshot.getKey());
+                                post.setPath("questions/"+dataSnapshot1.getKey());//data changed ++++++++++++++++++++++++++++
                                 //uploadDates.add(dataSnapshot1.child("time").getValue().toString());
                                 post.setDate(dataSnapshot1.child("time").getValue().toString());
                                 final String txtUrl=dataSnapshot1.child("textUrl").getValue().toString();
