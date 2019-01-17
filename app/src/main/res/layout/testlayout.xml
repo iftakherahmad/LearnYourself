@@ -39,7 +39,7 @@
                 android:id="@+id/addbutton"
                 android:layout_height="33dp"
                 android:layout_alignBottom="@+id/textview"
-                android:text="Confirm"
+                android:text="CONFIRM"
                 android:layout_marginLeft="33dp"
 
                 android:textSize="12sp"
@@ -51,7 +51,7 @@
                 android:id="@+id/deletebutton"
                 android:layout_height="33dp"
                 android:layout_alignBottom="@+id/textview"
-                android:text="Delete"
+                android:text="DELETE"
                 android:textSize="12sp"
                 android:background="@color/white"
                 android:layout_marginTop="15dp"

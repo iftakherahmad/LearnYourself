@@ -33,7 +33,8 @@
         <activity android:name=".ViewPost" />
         <activity android:name=".CommentActivity" />
         <activity android:name=".ShowComments" />
-        <activity android:name=".PresentAComment"></activity>
+        <activity android:name=".PresentAComment" />
+        <activity android:name=".FindUser"></activity>
     </application>
 
 </manifest>
