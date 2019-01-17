@@ -9,20 +9,24 @@ import android.view.ViewGroup;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationViewAdapter.ViewHolder>{
-    ArrayList<String> profilePics;
-    ArrayList<String> descriptions;
-    ArrayList<String> dates;
+    ArrayList<NotificationObject> notifications=new ArrayList<>();
     Context context;
-    public NotificationViewAdapter(Context context, ArrayList<String> profilePics,ArrayList<String> descriptions,ArrayList<String> dates){
-        this.profilePics=profilePics;
-        this.descriptions=descriptions;
-        this.dates=dates;
-        this.context=context;
+
+    public NotificationViewAdapter(ArrayList<NotificationObject> notifications, Context context) {
+        this.notifications = notifications;
+        this.context = context;
     }
 
     @NonNull
@@ -33,15 +37,56 @@ public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.description.setText(descriptions.get(i));
-        viewHolder.date.setText(dates.get(i));
-        GlideApp.with(context).asBitmap().load(profilePics.get(i)).into(viewHolder.profilePic);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final  int i) {
+     //   viewHolder.description.setText(descriptions.get(i));
+        try{
+            DatabaseReference userTable=FirebaseDatabase.getInstance().getReference("users/"+notifications.get(i).getInvolvedPerson());
+            userTable.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final String  userName=dataSnapshot.child("name").getValue().toString();
+                    String profilepic=dataSnapshot.child("profilePicUrl").getValue().toString();
+                    Glide.with(context).asBitmap().load(profilepic).into(viewHolder.profilePic);//
+                    DatabaseReference postTable;
+                    if(notifications.get(i).getPostType().equals("QUESTION")) {
+                        postTable = FirebaseDatabase.getInstance().getReference("questions/" + notifications.get(i).getInvolvedPost());
+                    }
+                    else{
+                        postTable=FirebaseDatabase.getInstance().getReference("vedios/"+notifications.get(i).getInvolvedPost());
+                    }
+                    postTable.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String postTitle=dataSnapshot.child("title").getValue().toString();
+                            String description=userName +notifications.get(i).getMessage()+postTitle;
+                            viewHolder.description.setText(description);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            viewHolder.date.setText(notifications.get(i).getTime());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return descriptions.size();
+        return notifications.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
