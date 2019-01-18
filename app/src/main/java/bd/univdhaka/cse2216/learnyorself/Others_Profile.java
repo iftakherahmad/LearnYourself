@@ -11,3 +11,6 @@ public class Others_Profile extends Activity {
         setContentView(R.layout.activity_others__profile);
     }
 }
+
+
+

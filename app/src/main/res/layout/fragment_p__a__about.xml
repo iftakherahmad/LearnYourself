@@ -31,7 +31,7 @@
                android:id="@+id/username"
                android:textSize="14sp"
                android:textColor="@color/colorAccent"
-               android:text="@string/username"
+               android:text="loading..."
                android:layout_marginLeft="10dp"
                />
            <RelativeLayout
@@ -73,7 +73,7 @@
                android:layout_height="wrap_content"
                android:id="@+id/name"
                android:textSize="14sp"
-               android:text="name"
+               android:text="loading..."
                android:layout_marginTop="2dp"
                android:textColor="@color/black"
                android:layout_marginLeft="10dp"
@@ -98,7 +98,7 @@
                android:layout_height="wrap_content"
                android:id="@+id/email"
                android:textSize="14sp"
-               android:text="email"
+               android:text="loading..."
                android:layout_marginTop="2dp"
                android:textColor="@color/black"
                android:layout_marginStart="10dp"
@@ -118,16 +118,16 @@
                android:layout_marginStart="20dp"
                android:layout_marginTop="2dp"
                />
+
            <EditText
+               android:id="@+id/institution"
                android:layout_width="fill_parent"
                android:layout_height="wrap_content"
-               android:id="@+id/institution"
-               android:textSize="14sp"
-               android:text="institution"
-               android:layout_marginTop="2dp"
-               android:textColor="@color/black"
                android:layout_marginStart="10dp"
-               />
+               android:layout_marginTop="2dp"
+               android:text="loading..."
+               android:textColor="@color/black"
+               android:textSize="14sp" />
 
        </LinearLayout>
        <LinearLayout
@@ -151,6 +151,7 @@
                android:textSize="14sp"
                android:layout_marginStart="10dp"
                android:entries="@array/userprofessions"
+               android:foregroundTint="@color/black"
                android:layout_height="wrap_content">
            </Spinner>
 
@@ -158,6 +159,7 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:orientation="horizontal"
+           android:id="@+id/oldpasswd"
            android:layout_height="wrap_content">
 
            <TextView
@@ -186,6 +188,7 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:orientation="horizontal"
+           android:id="@+id/newpasswd"
            android:layout_height="wrap_content">
            <TextView
                android:layout_width="wrap_content"
@@ -214,6 +217,7 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:orientation="horizontal"
+           android:id="@+id/confirmpasswd"
            android:layout_height="wrap_content">
 
            <TextView

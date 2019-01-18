@@ -171,6 +171,7 @@ public class LoginActivity5 extends Activity {
 
     private void showProfile() {
         Intent intent5=new Intent(this,ProfileActivity.class);
+        intent5.putExtra("userId",FirebaseAuth.getInstance().getUid());
         startActivity(intent5);
     }
 
