@@ -37,9 +37,10 @@ public class P_A_FriendsFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_p__a__friends, container, false);
         recyclerView=view.findViewById(R.id.recyclerView);
         progressBar=view.findViewById(R.id.progressbar);
-        userId= FirebaseAuth.getInstance().getUid();
+        userId= getActivity().getIntent().getStringExtra("userId");
         database= FirebaseDatabase.getInstance().getReference("friends/"+userId);
         context =getActivity();
+        System.out.println(userId);
         adapter=new FriendsAdapter(users,context);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
@@ -61,6 +62,7 @@ public class P_A_FriendsFragment extends Fragment {
                             String profilePic=dataSnapshot.child("profilePicUrl").getValue().toString();
                             User user=new User(name,"","",profilePic,"","",friendId,0,0,0);
                             users.add(user);
+                            progressBar.setVisibility(View.GONE);
                             adapter.notifyDataSetChanged();
 
                         }

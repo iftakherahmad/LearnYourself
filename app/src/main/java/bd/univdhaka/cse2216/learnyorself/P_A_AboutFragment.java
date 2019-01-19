@@ -69,6 +69,7 @@ public class P_A_AboutFragment extends Fragment {
             if(bundle!=null)userId = bundle.getString("userId");
             System.out.println(userId);
             userId=getActivity().getIntent().getStringExtra("userId");
+            System.out.println("uuuuu:"+userId);
 
             String child = authenticator.getCurrentUser().getUid();
             if (!userId.equals(child)) {

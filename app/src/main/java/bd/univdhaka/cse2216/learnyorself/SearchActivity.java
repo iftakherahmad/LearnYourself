@@ -147,7 +147,7 @@ public class SearchActivity extends Activity {
                         }
                     });
         }
-        if(type.equals("QUESTION")){/// if question is searched...............................................................
+        if(type.equals("QUESTION")){/// if question is searched.............................................................
             DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("questions");
             System.out.println("first");
             databaseReference

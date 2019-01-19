@@ -10,6 +10,7 @@
         android:description="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:label="Learn Yourself"
+        android:theme="@android:style/Theme.Holo"
         android:logo="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity5" />

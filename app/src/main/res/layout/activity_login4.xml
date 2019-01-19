@@ -1,91 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/yellow"
-tools:context=".LoginActivity4"
-android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/back"
+    tools:context=".LoginActivity4"
+    android:gravity="center"
     >
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/username"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        style="@style/AppTheme"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:text="Email:"/>
-    <EditText
-        android:layout_marginTop="10dp"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/email"
-        android:textColor="@color/black"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            style="@style/AppTheme"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="Email:"/>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/email"
+            android:textColor="@color/black"
 
-        android:padding="5dp"
-        android:layout_marginLeft="5dp"
-        android:hint="Enter your email"
-        android:textColorHint="@color/back"/>
-</LinearLayout>
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:hint="Enter your email"
+            android:textColorHint="@color/back"/>
+    </LinearLayout>
 
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
 
-        android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:textColor="@color/black"
-        android:padding="5dp"
+            android:textSize="20sp"
 
-        android:layout_marginTop="10dp"
-        android:text="Password:"/>
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        android:inputType="textPassword"
-        android:textColor="@color/black"
-        android:layout_marginLeft="5dp"
-        android:id="@+id/password"
-        style="@style/Animation.AppCompat.Dialog"
-        android:hint="Enter your password"
+            android:textColor="@color/black"
+            android:padding="5dp"
 
-        android:textColorHint="@color/back"/>
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginbutton"
-        android:scaleType="fitXY"
-        android:src="@drawable/login"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_height="wrap_content"
-        android:text="Don't have any account?"
+            android:layout_marginTop="10dp"
+            android:text="Password:"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/password"
+            style="@style/Animation.AppCompat.Dialog"
+            android:hint="Enter your password"
 
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:text="Sign up"
-        android:onClick="signup"
-        android:background="#1f4cdf"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+            android:textColorHint="@color/back"/>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:id="@+id/loginbutton"
+            android:background="@drawable/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/login111"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            style="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="#fc03c6"
+            android:layout_height="wrap_content"
+            android:text="Don't have any account?"
+
+            />
+        <ImageButton
+            android:layout_width="match_parent"
+            android:src="@drawable/signup01"
+            android:scaleType="fitXY"
+            android:onClick="signup"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/transparent"
+            android:layout_height="60dp" />
+    </LinearLayout>
 
 
 

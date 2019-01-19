@@ -47,6 +47,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                     FirebaseDatabase.getInstance().getReference("friends/" + FirebaseAuth.getInstance().getUid() + "/" + users.get(i).getUserId()).removeValue();
                     FirebaseDatabase.getInstance().getReference("friends/" + users.get(i).getUserId() + "/" + FirebaseAuth.getInstance().getUid()).removeValue();
                 }
+                viewHolder.unfriend.setBackgroundColor(Color.TRANSPARENT);
                 viewHolder.unfriend.setText("UNFRIENDED");
             }
         });
