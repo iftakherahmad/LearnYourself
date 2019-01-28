@@ -5,14 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/Theme.AppCompat.Light"
+    android:orientation="vertical"
     tools:context=".MainActivity"
     android:background="@color/aqua">
 
-<com.github.barteksc.pdfviewer.PDFView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/pdfview1">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:background="#f2f1f2"
 
-</com.github.barteksc.pdfviewer.PDFView>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Top videos:"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="#193c83"
+                android:textSize="30sp"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recyclerView"
+                android:layout_height="400dp">
+
+            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mystr1"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

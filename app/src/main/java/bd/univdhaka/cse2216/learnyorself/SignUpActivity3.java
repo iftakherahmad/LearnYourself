@@ -96,7 +96,14 @@ public class SignUpActivity3 extends Activity {
                     FirebaseHandler firebaseHandler=new FirebaseHandler(SignUpActivity3.this);
 
                     try {
-                        firebaseHandler.createNewUser(name,email,institution,profession,password,fileHandler.getDowloadUrl());
+                        if(fileHandler.getDowloadUrl()!=null) {
+                            firebaseHandler.createNewUser(name, email, institution, profession, password, fileHandler.getDowloadUrl());
+                        }
+
+                        
+                        else {
+                            Toast.makeText(SignUpActivity3.this,"Please select a valid profile picture.",Toast.LENGTH_SHORT).show();
+                        }
                        // Toast.makeText(SignUpActivity3.this,"User created successfully .",Toast.LENGTH_SHORT).show();
                     //    Intent intent1=new Intent(SignUpActivity3.this,LoginActivity5.class);
                      //   startActivity(intent1);

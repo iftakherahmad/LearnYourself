@@ -8,17 +8,22 @@ import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,6 +39,7 @@ public class ViewPost extends Activity {
     private TextView tagInput;
     private LinearLayout container;
     private Button updateButton;
+    private Button controlButton;
     private DatabaseReference database;
     private CircleImageView profilePic;
     private TextView ownerNameInput;
@@ -57,11 +63,38 @@ public class ViewPost extends Activity {
         context=this;
         tagInput=findViewById(R.id.tag);
         container=findViewById(R.id.container);
+        controlButton=findViewById(R.id.editcontroller);
         updateButton=findViewById(R.id.update);
-        Intent intent=getIntent();
+        final Intent intent=getIntent();
         System.out.println("2.....");
         String postType=intent.getStringExtra("type");
         database= FirebaseDatabase.getInstance().getReference(postType);
+        final String currentUser= FirebaseAuth.getInstance().getUid();
+        updateButton.setVisibility(View.GONE);
+        if(currentUser==null || !intent.getStringExtra("postId").equals(currentUser)){
+            System.out.println("cu:"+currentUser+"\n"+intent.getStringExtra("postId"));
+            controlButton.setVisibility(View.GONE);
+        }
+        FirebaseDatabase.getInstance().getReference("questions/"+intent.getStringExtra("postId")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String owner=dataSnapshot.child("owner").getValue().toString();
+                if(owner.equals(currentUser)){controlButton.setVisibility(View.VISIBLE);}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        controlButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1=new Intent(ViewPost.this,CreatePost12.class);
+                intent1.putExtra("postId",intent.getStringExtra("postId"));
+                startActivity(intent1);
+            }
+        });
         System.out.println("4.....");
         setData();
     }
@@ -85,7 +118,7 @@ public class ViewPost extends Activity {
                 titleInput.setText(title);
                 postingDateInput.setText(postingDate);
                 DatabaseReference userTable=FirebaseDatabase.getInstance().getReference("users");
-                userTable.child(owner).addListenerForSingleValueEvent(new ValueEventListener() {
+                userTable.child(owner).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String userName=dataSnapshot.child("name").getValue().toString();
@@ -99,6 +132,7 @@ public class ViewPost extends Activity {
                             System.out.println("token: "+tok1);
                             if(tok1.equals("txt")){
                                 TextView tv1=dynamicView.createTextView("loading..",18);
+                               // EditText tv2=dynamicView.createEditText();
                                 dynamicTextViews.add(tv1);
                                 container.addView(tv1);
                                 new BackgroundTask1(tv1,textUrls,context).execute();

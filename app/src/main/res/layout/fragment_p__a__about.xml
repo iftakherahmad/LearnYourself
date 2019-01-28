@@ -170,7 +170,6 @@
                android:text="Old Password:"
                android:layout_marginLeft="20dp"
                android:layout_marginTop="2dp"
-
                />
            <EditText
                android:layout_width="fill_parent"
@@ -244,15 +243,17 @@
 
        </LinearLayout>
 
-       <Button
+       <ImageButton
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+           android:layout_height="60dp"
+           android:scaleType="fitXY"
            android:id="@+id/update"
-           android:layout_marginTop="5dp"
-           android:background="@color/back"
+           android:layout_marginTop="30dp"
+           android:background="@drawable/transparent"
+           android:src="@drawable/update111"
            android:textSize="14sp"
            android:textColor="@color/black"
-           android:text="UPDATE INFO"/>
+           />
 
 
 

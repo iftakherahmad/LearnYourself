@@ -16,5 +16,6 @@
         <item>USER</item>
 
     </array>
+    <string name="mystr1">This site for encouraging education of Bangladesh.Many student of Bangladesh don\'t know english well that\'s why they fill uncomfortable to use stackoverflow or other international websites.Our application is dedicated for bangladeshi students so that they can express their questions to community.</string>
     <string name="username">User Name</string>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,7 +61,8 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        if(posts.get(i).getPostType().equals("VIDEO")) {
+        try{
+        if (posts.get(i).getPostType().equals("VIDEO")) {
             Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
             viewHolder.owner.setText(posts.get(i).getOwnerName());
             viewHolder.postingDate.setText(posts.get(i).getDate());
@@ -68,108 +71,124 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    {
+                    {try {
                         Intent intent = new Intent(context, Vedio_Play.class);
                         intent.putExtra("url", posts.get(i).getContentImage());
-                        intent.putExtra("type","vedios");
-                        intent.putExtra("parentId",posts.get(i).getPostId());
+                        intent.putExtra("type", "vedios");
+                        intent.putExtra("parentId", posts.get(i).getPostId());
                         context.startActivity(intent);
+                    }catch (Exception e){e.printStackTrace();}
                     }
 
                 }
             });
-        }
-        else if(posts.get(i).getPostType().equals("QUESTION")){/////////////////this part is for question
-          //  System.out.println("first tut tut");
-            if(posts.get(i).getProfilePic()!=null || posts.get(i).getProfilePic().length()>3)Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
-          //  System.out.println("tut tut 0");
+        } else if (posts.get(i).getPostType().equals("QUESTION")) {/////////////////this part is for question
+            //  System.out.println("first tut tut");
+            if (posts.get(i).getProfilePic() != null || posts.get(i).getProfilePic().length() > 3)
+                Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
+            //  System.out.println("tut tut 0");
             viewHolder.owner.setText(posts.get(i).getOwnerName());
-           // System.out.println("tut tut1");
+            // System.out.println("tut tut1");
             viewHolder.postingDate.setText(posts.get(i).getDate());
-           // System.out.println("tut tut2");
+            // System.out.println("tut tut2");
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(context,ViewPost.class);
-                    intent.putExtra("type","questions");
-                    intent.putExtra("postId",posts.get(i).getPostId());
+                    Intent intent = new Intent(context, ViewPost.class);
+                    intent.putExtra("type", "questions");
+                    intent.putExtra("postId", posts.get(i).getPostId());
                     context.startActivity(intent);
                 }
             });
-          //  System.out.println("tut tut5");
-            if(!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage()==null))Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
-          //  System.out.println("tut tut6");
+            //  System.out.println("tut tut5");
+            if (!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage() == null))
+                Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
+            //  System.out.println("tut tut6");
             viewHolder.details.setText(posts.get(i).getText());
 
-        }
-        else if(posts.get(i).getPostType().equals("ANSER")){
-            if(posts.get(i).getProfilePic()!=null || posts.get(i).getProfilePic().length()>3)Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
+        } else if (posts.get(i).getPostType().equals("ANSER")) {
+            if (posts.get(i).getProfilePic() != null || posts.get(i).getProfilePic().length() > 3)
+                Glide.with(context).asBitmap().load(posts.get(i).getProfilePic()).into(viewHolder.profilePic);
             viewHolder.owner.setText(posts.get(i).getOwnerName());
             viewHolder.postingDate.setText(posts.get(i).getDate());
             System.out.println("....................------------------------------.................++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(context,PresentAComment.class);
-                    intent.putExtra("type","comments");
-                    intent.putExtra("postId",posts.get(i).getPostId());
-                    intent.putExtra("parentId",parentId);
+                    Intent intent = new Intent(context, PresentAComment.class);
+                    intent.putExtra("type", "comments");
+                    intent.putExtra("postId", posts.get(i).getPostId());
+                    intent.putExtra("parentId", parentId);
                     context.startActivity(intent);
                 }
             });
-            if(!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage()==null))Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
+            if (!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage() == null))
+                Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
 
             viewHolder.details.setText(posts.get(i).getText());
         }
         viewHolder.writeAnser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,CommentActivity.class);
-                System.out.println("Posts...........+++++++++++++++++++++++++++"+posts.get(i).getPostId());
-                intent.putExtra("path",posts.get(i).getPath());
-                intent.putExtra("postId",posts.get(i).getPostId());
-                intent.putExtra("parentId",posts.get(i).getPostId());
-                intent.putExtra("postType",posts.get(i).getPostType());
-                context.startActivity(intent);
+                if(FirebaseAuth.getInstance().getUid()==null){
+                    Toast.makeText(context,"Please log in to comment.",Toast.LENGTH_SHORT).show();
+                }
+                else
+                try {
+                    Intent intent = new Intent(context, CommentActivity.class);
+                    System.out.println("Posts...........+++++++++++++++++++++++++++" + posts.get(i).getPostId());
+                    intent.putExtra("path", posts.get(i).getPath());
+                    intent.putExtra("postId", posts.get(i).getPostId());
+                    intent.putExtra("parentId", posts.get(i).getPostId());
+                    intent.putExtra("postType", posts.get(i).getPostType());
+                    context.startActivity(intent);
+                }catch (Exception e){e.printStackTrace();}
             }
         });
-        if(!posts.get(i).getPostType().equals("ANSER")) {
+        if (!posts.get(i).getPostType().equals("ANSER")) {
             viewHolder.ansers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ShowComments.class);
-                    if(posts.get(i).getPostType().equals("VIDEO"))
-                        intent.putExtra("type","vedios");
+                    if(viewHolder.commentNumber.getText().equals("0")){
+                        Toast.makeText(context,"No answer or comment for this post.",Toast.LENGTH_SHORT).show();
+                    }
                     else
-                        intent.putExtra("type", "questions");
-                    intent.putExtra("path",posts.get(i).getPath());
-                    intent.putExtra("postId",posts.get(i).getPostId());
-                    intent.putExtra("parentId", posts.get(i).getPostId());
-                    context.startActivity(intent);
+                    try {
+                        Intent intent = new Intent(context, ShowComments.class);
+                        if (posts.get(i).getPostType().equals("VIDEO"))
+                            intent.putExtra("type", "vedios");
+                        else
+                            intent.putExtra("type", "questions");
+                        intent.putExtra("path", posts.get(i).getPath());
+                        intent.putExtra("postId", posts.get(i).getPostId());
+                        intent.putExtra("parentId", posts.get(i).getPostId());
+                        context.startActivity(intent);
+                    }catch (Exception e){e.printStackTrace();}
                 }
             });
-        }
-        else {
+        } else {
             viewHolder.ansers.setVisibility(View.GONE);
         }
-        final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(posts.get(i).getPath());
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(posts.get(i).getPath());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                viewHolder.likeNumber.setText((String.valueOf( dataSnapshot.child("like").getChildrenCount())));
-                if(dataSnapshot.child("like").hasChild(FirebaseAuth.getInstance().getUid())){
-                    viewHolder.like.setBackgroundColor(Color.BLUE);
-                }
-                viewHolder.dislikeNumber.setText(String.valueOf(dataSnapshot.child("dislike").getChildrenCount()));
-                if(dataSnapshot.child("dislike").hasChild(FirebaseAuth.getInstance().getUid())){
-                    viewHolder.dislike.setBackgroundColor(Color.BLUE);
-                }
-                if(posts.get(i).getPostType().equals("QUESTION")){
-                    viewHolder.commentNumber.setText(String.valueOf(dataSnapshot.child("ansers").getChildrenCount()));
-                }
-                if(posts.get(i).getPostType().equals("VIDEO")){
-                    viewHolder.commentNumber.setText(String.valueOf(dataSnapshot.child("comments").getChildrenCount()));
-                }
+                try {
+                    viewHolder.likeNumber.setText((String.valueOf(dataSnapshot.child("like").getChildrenCount())));
+                    if (dataSnapshot.child("like").getChildrenCount()!=0 && dataSnapshot.child("like").hasChild(FirebaseAuth.getInstance().getUid())) {
+                        viewHolder.like.setBackgroundColor(Color.BLUE);
+                    }
+                    viewHolder.dislikeNumber.setText(String.valueOf(dataSnapshot.child("dislike").getChildrenCount()));
+                    if (dataSnapshot.child("dislike").getChildrenCount()!=0 &&dataSnapshot.child("dislike").hasChild(FirebaseAuth.getInstance().getUid())) {
+                        viewHolder.dislike.setBackgroundColor(Color.BLUE);
+                    }
+                    if (posts.get(i).getPostType().equals("QUESTION")) {
+                        viewHolder.commentNumber.setText(String.valueOf(dataSnapshot.child("ansers").getChildrenCount()));
+                    }
+                    if (posts.get(i).getPostType().equals("VIDEO")) {
+                        viewHolder.commentNumber.setText(String.valueOf(dataSnapshot.child("comments").getChildrenCount()));
+                    }
+                }catch (Exception e){e.printStackTrace();}
             }
 
             @Override
@@ -180,20 +199,32 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.like.setBackgroundColor(Color.BLUE);
-                updateDatabaseForLike(posts.get(i).getPath());
+                if(FirebaseAuth.getInstance().getUid()==null){
+                    Toast.makeText(context,"Please log in to like",Toast.LENGTH_SHORT).show();
+                }
+                else
+                try {
+                    viewHolder.like.setBackgroundColor(Color.BLUE);
+                    updateDatabaseForLike(posts.get(i).getPath());
+                }catch (Exception e){e.printStackTrace();}
             }
         });
         viewHolder.dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.dislike.setBackgroundColor(Color.BLUE);
-                updateDatabaseForDislike(posts.get(i).getPath());
+                if(FirebaseAuth.getInstance().getUid()==null)
+                {
+                    Toast.makeText(context,"Please log in to dislike.",Toast.LENGTH_SHORT).show();
+                }else
+                try {
+                    viewHolder.dislike.setBackgroundColor(Color.BLUE);
+                    updateDatabaseForDislike(posts.get(i).getPath());
+                }catch (Exception e){e.printStackTrace();}
             }
         });
-       // updateLikeColor(posts.get(i).getPath(),viewHolder.like);
+        // updateLikeColor(posts.get(i).getPath(),viewHolder.like);
 
-
+    }catch (Exception e){e.printStackTrace();}
     }
 
 

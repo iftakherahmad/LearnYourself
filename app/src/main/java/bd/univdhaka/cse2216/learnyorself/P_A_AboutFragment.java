@@ -1,17 +1,20 @@
 package bd.univdhaka.cse2216.learnyorself;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -19,12 +22,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class P_A_AboutFragment extends Fragment {
@@ -37,7 +48,7 @@ public class P_A_AboutFragment extends Fragment {
     private EditText oldPasswordView;
     private EditText newPasswordView;
     private EditText confirmPasswordView;
-    private Button confirmButton;
+    private ImageButton confirmButton;
     private DatabaseReference userTable;
     private FirebaseAuth authenticator;
     private String userId;
@@ -45,6 +56,7 @@ public class P_A_AboutFragment extends Fragment {
     private LinearLayout oldPasswd;
     private LinearLayout newPasswd;
     private LinearLayout confirmPasswd;
+    private ProgressDialog progressDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +77,9 @@ public class P_A_AboutFragment extends Fragment {
             newPasswd = view.findViewById(R.id.newpasswd);
             confirmPasswd = view.findViewById(R.id.confirmpasswd);
             authenticator = FirebaseAuth.getInstance();
+            progressDialog=new ProgressDialog(context);
+            progressDialog.setTitle("Updating...");
+
             Bundle bundle =this.getArguments();
             if(bundle!=null)userId = bundle.getString("userId");
             System.out.println(userId);
@@ -78,6 +93,15 @@ public class P_A_AboutFragment extends Fragment {
                 confirmPasswd.setVisibility(View.GONE);
                 confirmButton.setVisibility(View.GONE);
             }
+            else{
+                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateProfile();
+                    }
+                });
+            }
+
             Toast.makeText(context, child, Toast.LENGTH_SHORT).show();
 
             userTable = FirebaseDatabase.getInstance().getReference("users/" + userId);
@@ -108,6 +132,45 @@ public class P_A_AboutFragment extends Fragment {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void updateProfile() {
+        progressDialog.show();
+        final String name=nameView.getText().toString();
+        String profession=professionView.getSelectedItem().toString();
+        String institution=institutionView.getText().toString();
+        String oldPassword=oldPasswordView.getText().toString();
+        final String email=emailView.getText().toString();
+        final String newPassword=newPasswordView.getText().toString();
+        String confirmPassword=confirmPasswordView.getText().toString();
+        final Map updateProfile=new HashMap();
+        updateProfile.put("users/"+userId+"/name",name);
+        updateProfile.put("users/"+userId+"/profession",profession);
+        updateProfile.put("users/"+userId+"/institution",institution);
+        final FirebaseAuth authenticator=FirebaseAuth.getInstance();
+        AuthCredential credential= EmailAuthProvider.getCredential(email,oldPassword);
+        System.out.println(email+": :"+newPassword+": :"+oldPassword);
+
+        if(newPassword.equals(confirmPassword)){
+            authenticator.getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        System.out.println("task successfull");
+                        FirebaseDatabase.getInstance().getReference().updateChildren(updateProfile);
+                        UserProfileChangeRequest profileChangeRequest=new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                        authenticator.getCurrentUser().updateProfile(profileChangeRequest);
+                        authenticator.getCurrentUser().updatePassword(newPassword);
+                        Toast.makeText(context,"Update successful.",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(context,"Update Failed",Toast.LENGTH_SHORT).show();
+                        System.out.println(" updation failed");
+                    }
+                    progressDialog.hide();
+                }
+            });
+        }
     }
 
     private void setData(String userName, String email, String institution, String profession, String profilePicUrl) {

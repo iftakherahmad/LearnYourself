@@ -22,7 +22,7 @@ public class LoginActivity4 extends Activity {
     private ImageButton loginButton;
     private FirebaseAuth authenticator;
     private ProgressDialog progressDialog;
-
+    private String catche=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,12 @@ public class LoginActivity4 extends Activity {
                 progressDialog.show();
                 String email=emailInput.getText().toString();
                 String password=passwordInput.getText().toString();
-                login(email,password);
+                if(email.length()<6 || password.length()<6)
+                    Toast.makeText(LoginActivity4.this,"Email and Password should have at least 6 characters.",Toast.LENGTH_SHORT).show();
+                else {
+                    if(catche!=null)Toast.makeText(LoginActivity4.this,"Authenticating please wait.",Toast.LENGTH_SHORT).show();
+                    else login(email, password);
+                }
             }
         });
         System.out.println("4");
@@ -55,6 +60,7 @@ public class LoginActivity4 extends Activity {
 //    }
 
     private void login(String email, String password) {
+        catche="running";
         authenticator.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -62,9 +68,12 @@ public class LoginActivity4 extends Activity {
                     progressDialog.hide();
                     Intent intent=new Intent(LoginActivity4.this,LoginActivity5.class);
                     Toast.makeText(LoginActivity4.this,"Login successful.",Toast.LENGTH_SHORT).show();
+                    catche=null;
                     startActivity(intent);
+
                 }
                 else{
+                    catche=null;
                     progressDialog.hide();
                     Toast.makeText(LoginActivity4.this,"Authentication failed.",Toast.LENGTH_SHORT).show();
                 }
