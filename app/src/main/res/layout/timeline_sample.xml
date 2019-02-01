@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:background="@color/fuch"
                 android:layout_marginLeft="0dp"
-                android:text="Ansers"
+                android:text="Answers"
                 android:id="@+id/ansers"
                 android:layout_height="wrap_content" />
             <TextView

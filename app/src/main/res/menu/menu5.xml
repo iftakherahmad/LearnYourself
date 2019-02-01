@@ -12,8 +12,7 @@
         />
     <item android:id="@+id/uploadvideo"
         android:title="Upload Video"/>
-    <item android:id="@+id/writearticle"
-        android:title="Write Article"/>
+
     <item android:id="@+id/finduser"
         android:title="Find User"/>
     <item android:id="@+id/about"

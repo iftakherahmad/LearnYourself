@@ -10,8 +10,8 @@
         android:description="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:label="Learn Yourself"
-        android:theme="@android:style/Theme.Holo"
-        android:logo="@mipmap/ic_launcher">
+        android:logo="@mipmap/ic_launcher"
+        android:theme="@android:style/Theme.Holo">
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity5" />
         <activity android:name=".SplashScreen0">
@@ -35,7 +35,8 @@
         <activity android:name=".CommentActivity" />
         <activity android:name=".ShowComments" />
         <activity android:name=".PresentAComment" />
-        <activity android:name=".FindUser"></activity>
+        <activity android:name=".FindUser" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

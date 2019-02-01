@@ -16,6 +16,18 @@
         <item>USER</item>
 
     </array>
-    <string name="mystr1">This site for encouraging education of Bangladesh.Many student of Bangladesh don\'t know english well that\'s why they fill uncomfortable to use stackoverflow or other international websites.Our application is dedicated for bangladeshi students so that they can express their questions to community.</string>
+    <string name="mystr1">This site for encouraging education of Bangladesh.Many student of Bangladesh don\'t know english well that\'s why they feel uncomfortable to use stackoverflow or other international websites.Our application is dedicated for bangladeshi students so that they can express their questions to community.</string>
     <string name="username">User Name</string>
+
+    <string name="mystr2">This application is dedicated for bangladeshi students.
+    Many student of Bangladesh don\'t know english well that\'s why they feel uncomfortable to use stackoverflow or other international websites.
+        View of this application is to remove this problem.
+
+        This Application is developed by :
+        1.Md. Iftakher Ahmad , Department of Computer Science and Engineering , University of Dhaka.
+        2.Mridul Banik , Department of Computer Science and Engineering , University of Dhaka.
+        3.Abdullah Al Thaki , Department of Computer Science and Engineering , University of Dhaka.
+
+
+    </string>
 </resources>

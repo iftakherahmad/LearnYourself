@@ -117,7 +117,10 @@ public class MainActivity extends Activity {
             startActivity(intent);
         }
         if(item.getItemId()==R.id.about)
-            Toast.makeText(this,"About Clicked",Toast.LENGTH_SHORT).show();
+        {
+            Intent intent =new Intent(this,AboutActivity.class);
+            startActivity(intent);
+        }
 
 
         return super.onOptionsItemSelected(item);

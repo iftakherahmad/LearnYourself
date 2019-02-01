@@ -25,7 +25,7 @@ public class SplashScreen0 extends Activity {
         setContentView(R.layout.activity_splash_screen0);
         imageView=findViewById(R.id.imageView);
         setTitle("Learn Yourself");
-        GlideApp.with(this).asBitmap().load(R.mipmap.home).into(imageView);
+       // GlideApp.with(this).asBitmap().load(R.mipmap.home).into(imageView);
 
 
         progressBar=findViewById(R.id.progressbar);
@@ -34,7 +34,7 @@ public class SplashScreen0 extends Activity {
             public void run() {
                 for(int i=1;i<=100;i++){
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
