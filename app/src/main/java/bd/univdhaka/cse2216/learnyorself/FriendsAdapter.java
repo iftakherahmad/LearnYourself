@@ -22,10 +22,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder>{
     private ArrayList<User> users;
     private Context context;
+    private String  owner;
 
-    public FriendsAdapter(ArrayList<User> users, Context context) {
+    public FriendsAdapter(ArrayList<User> users, Context context,String owner) {
         this.users = users;
         this.context = context;
+        this.owner=owner;
     }
 
     @NonNull
@@ -40,6 +42,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public void onBindViewHolder(@NonNull final FriendsAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.userName.setText(users.get(i).getName());
         GlideApp.with(context).asBitmap().load(users.get(i).getProfilePicUrl()).into(viewHolder.profilePic);
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null && FirebaseAuth.getInstance().getUid().equals(owner))viewHolder.unfriend.setText("UNFRIEND");
+        else viewHolder.unfriend.setVisibility(View.GONE);
         viewHolder.unfriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +52,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                     FirebaseDatabase.getInstance().getReference("friends/" + users.get(i).getUserId() + "/" + FirebaseAuth.getInstance().getUid()).removeValue();
                 }
                 viewHolder.unfriend.setBackgroundColor(Color.TRANSPARENT);
-                viewHolder.unfriend.setText("UNFRIENDED");
+                if(FirebaseAuth.getInstance().getCurrentUser()!=null && FirebaseAuth.getInstance().getUid().equals(owner))viewHolder.unfriend.setText("UNFRIENDED");
+                else viewHolder.unfriend.setVisibility(View.GONE);
             }
         });
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {

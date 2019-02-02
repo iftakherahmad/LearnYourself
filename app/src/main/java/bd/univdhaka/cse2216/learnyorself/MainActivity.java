@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +37,7 @@ public class MainActivity extends Activity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             setTitle(getResources().getString(R.string.title));
+            FirebaseAuth.getInstance().signOut();
             recyclerView = findViewById(R.id.recyclerView);
             adapter = new TimelineViewAdapter(videos, this);
             recyclerView.setAdapter(adapter);

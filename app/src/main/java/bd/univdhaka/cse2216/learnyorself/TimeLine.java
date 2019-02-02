@@ -72,41 +72,45 @@ public class TimeLine extends Fragment {
         posts.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot1) {
-                index=-1;
+                index = -1;
 
 
-                for (DataSnapshot dataSnapshot : dataSnapshot1.getChildren()){
+                for (DataSnapshot dataSnapshot : dataSnapshot1.getChildren()) {
+                    try {
                     index++;
 
                     System.out.println("........5");
-                    timeline_object post=new timeline_object();
+                    timeline_object post = new timeline_object();
 
-                final String owner = dataSnapshot.child("owner").getValue().toString();
-                String postingDate = dataSnapshot.child("time").getValue().toString();
-                post.setDate(postingDate);
-                //postingDates.add(postingDate);
-                   // postingDates.set(index,postingDate);
-                    System.out.println("ind.."+index+"postingDate......."+postingDate);
-                String postId=dataSnapshot.getKey();
-                post.setPath("questions/"+postId);
-                post.setPostId(postId);
-                //postIds.add(postId);
-                    System.out.println("index:"+index);
-                   // postIds.set(index,postId);
-                    System.out.println("ind..."+index+"postId...."+postId);
-                final String textUrl = dataSnapshot.child("textUrl").getValue().toString();
-                String imageUrls = dataSnapshot.child("imageUrls").getValue().toString();
-                String firstImageUrl = extractFirstUrl(imageUrls);
-                //contentImages.add(firstImageUrl);
-                post.setContentImage(firstImageUrl);
-                //    contentImages.set(index,firstImageUrl);
-                System.out.println(".........6");
-                DatabaseReference userTable = FirebaseDatabase.getInstance().getReference("users/"+owner);
+                    final String owner = dataSnapshot.child("owner").getValue().toString();
+                    String postingDate = dataSnapshot.child("time").getValue().toString();
+                    post.setDate(postingDate);
+                    //postingDates.add(postingDate);
+                    // postingDates.set(index,postingDate);
+                    System.out.println("ind.." + index + "postingDate......." + postingDate);
+                    String postId = dataSnapshot.getKey();
+                    post.setPath("questions/" + postId);
+                    post.setPostId(postId);
+                    //postIds.add(postId);
+                    System.out.println("index:" + index);
+                    // postIds.set(index,postId);
+                    System.out.println("ind..." + index + "postId...." + postId);
+                    final String textUrl = dataSnapshot.child("textUrl").getValue().toString();
+                    String imageUrls = dataSnapshot.child("imageUrls").getValue().toString();
+                        System.out.println("asi");
+                    String firstImageUrl = extractFirstUrl(imageUrls);
+                        System.out.println("crash hoi nai");
+                    //contentImages.add(firstImageUrl);
+                    post.setContentImage(firstImageUrl);
+                    //    contentImages.set(index,firstImageUrl);
+                    System.out.println(".........6");
+                    DatabaseReference userTable = FirebaseDatabase.getInstance().getReference("users/" + owner);
 
-                final String titleTag = "#" + dataSnapshot.child("tag").getValue().toString() + ": \n" + dataSnapshot.child("title").getValue().toString() + "\n";
-                addListenerInUserTable(userTable,post,textUrl,titleTag,index);
+                    final String titleTag = "#" + dataSnapshot.child("tag").getValue().toString() + ": \n" + dataSnapshot.child("title").getValue().toString() + "\n";
+                    addListenerInUserTable(userTable, post, textUrl, titleTag, index);
 
 
+                }catch(Exception e){e.printStackTrace();}
             }
             }
 
@@ -150,9 +154,16 @@ public class TimeLine extends Fragment {
     }
     private String extractFirstUrl(String imageUrls) {
         Scanner scanner=new Scanner(imageUrls);
-        int urlLength=scanner.nextInt();
-        String remaining=scanner.nextLine();
-        String url1=remaining.substring(1,urlLength);
+        int urlLength=1;
+        String remaining="";
+        if(scanner.hasNextInt()) {
+            urlLength = scanner.nextInt();
+            if(scanner.hasNext())
+            remaining=scanner.nextLine();
+        }
+        String url1="";
+        if(remaining.length()>5)
+        url1=remaining.substring(1,urlLength);
         return url1;
     }
 

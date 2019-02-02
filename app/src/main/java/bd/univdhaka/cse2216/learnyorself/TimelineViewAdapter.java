@@ -101,7 +101,7 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
                 }
             });
             //  System.out.println("tut tut5");
-            if (!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage() == null))
+            if (!(posts.get(i).getContentImage().equals("") || posts.get(i).getContentImage() == null|| posts.get(i).getContentImage().length()<=5))
                 Glide.with(context).asBitmap().load(posts.get(i).getContentImage()).into(viewHolder.contentImage);
             //  System.out.println("tut tut6");
             viewHolder.details.setText(posts.get(i).getText());
@@ -167,6 +167,7 @@ public class TimelineViewAdapter extends RecyclerView.Adapter<TimelineViewAdapte
                 }
             });
         } else {
+            viewHolder.writeAnser.setVisibility(View.GONE);
             viewHolder.ansers.setVisibility(View.GONE);
         }
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(posts.get(i).getPath());

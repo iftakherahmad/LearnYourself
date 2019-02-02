@@ -41,7 +41,7 @@ public class P_A_FriendsFragment extends Fragment {
         database= FirebaseDatabase.getInstance().getReference("friends/"+userId);
         context =getActivity();
         System.out.println(userId);
-        adapter=new FriendsAdapter(users,context);
+        adapter=new FriendsAdapter(users,context,userId);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
         fetchData();

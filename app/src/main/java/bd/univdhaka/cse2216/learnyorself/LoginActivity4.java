@@ -28,7 +28,7 @@ public class LoginActivity4 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login4);
         System.out.println("1");
-        setTitle("LOG IN");
+        setTitle("LOGIN");
         System.out.println("3");
         emailInput=findViewById(R.id.email);
         passwordInput=findViewById(R.id.password);

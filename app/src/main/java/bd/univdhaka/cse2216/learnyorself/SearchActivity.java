@@ -95,7 +95,7 @@ public class SearchActivity extends Activity {
             DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("vedios");
             databaseReference
                     .orderByChild("title")
-                    .startAt("%"+query+"%")
+                    .startAt(query)
                     .endAt(query+"\uf8ff")
                     .limitToFirst(10)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -152,7 +152,7 @@ public class SearchActivity extends Activity {
             System.out.println("first");
             databaseReference
                     .orderByChild("title")
-                    .startAt("%"+query+"%")
+                    .startAt(query)
                     .endAt(query+"\uf8ff")
                     .limitToFirst(20)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
